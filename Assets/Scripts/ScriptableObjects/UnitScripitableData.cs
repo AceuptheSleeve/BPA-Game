@@ -6,6 +6,5 @@ using UnityEngine;
 public class UnitStats : ScriptableObject
 {
     public int totalHP;
-    public float damage, attackRate, attackRange, speed, spawnTime, projectileSpeed;
-    public GameObject projectilePrefab;
+    public float damage, attackRate, attackRange, speed, spawnTime;
 }
