@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Vector2 mousePos = new Vector2();
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +17,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector2 mousePos = Input.mousePosition;
+        mousePos = Input.mousePosition;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");

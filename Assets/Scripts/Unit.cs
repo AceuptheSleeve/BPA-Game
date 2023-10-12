@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class Unit : MonoBehaviour
     public EnemyUnit currentTarget;
     public float currentHP;//, XP; Leveling System?
     public float nextAttackTime = 0;
-    //public AudioClip[] audioClips; 
+    //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
@@ -30,6 +28,8 @@ public class Unit : MonoBehaviour
     void LateUpdate()
     {
         transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
+        Debug.DrawLine(transform.position, newPos);
+
         if (Input.GetMouseButtonDown(0))
         {
             newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -46,10 +46,11 @@ public class Unit : MonoBehaviour
             }
         }
 
-        //Searching when there's no enemies
+        //Searching
         else
         {
             EnemyDetection();
+            nextAttackTime = 0;
         }
     }
 
@@ -73,6 +74,17 @@ public class Unit : MonoBehaviour
 
     public void EnemyDetection()
     {
-        
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2 (stats.attackRange, stats.attackRange), 0);
+
+        foreach (Collider2D collider in colliders)
+        {
+            EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
+            
+            if (indentifer)
+            {
+                Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
+                currentTarget = indentifer;
+            }
+        }
     }
 }

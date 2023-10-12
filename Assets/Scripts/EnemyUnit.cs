@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 public class EnemyUnit : MonoBehaviour
@@ -9,7 +10,7 @@ public class EnemyUnit : MonoBehaviour
     public Unit currentTarget;
     public float currentHP;//, XP; Leveling System?
     public float nextAttackTime = 0;
-    //public AudioClip[] audioClips; 
+    //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
@@ -37,20 +38,12 @@ public class EnemyUnit : MonoBehaviour
                 nextAttackTime = Time.time + 1f / stats.attackRate;
             }
         }
-
-        //Searching when there's no enemies
+        
+        //Searching
         else
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, stats.attackRange);
-            foreach (Collider collider in colliders)
-            {
-                Unit enemy = collider.GetComponent<Unit>();
-                if (enemy != null && enemy != this && enemy.tag == "Unit")
-                {
-                    currentTarget = enemy;
-                    break;
-                }
-            }
+            EnemyDetection();
+            nextAttackTime = 0;
         }
     }
 
@@ -69,6 +62,22 @@ public class EnemyUnit : MonoBehaviour
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             Destroy(gameObject);
+        }
+    }
+
+    public void EnemyDetection()
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
+
+        foreach (Collider2D collider in colliders)
+        {
+            Unit indentifer = collider.GetComponent<Unit>();
+
+            if (indentifer)
+            {
+                Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
+                currentTarget = indentifer;
+            }
         }
     }
 }
