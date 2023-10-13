@@ -8,20 +8,24 @@ public class EnemyUnit : MonoBehaviour
 {
     public UnitStats stats;
     public Unit currentTarget;
-    public float currentHP;//, XP; Leveling System?
-    public float nextAttackTime = 0;
+    public float currentHP, nextAttackTime = 0;//, XP; Leveling System?
     //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Assigning values
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         currentHP = stats.totalHP;
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        GiveName();
+        Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in!");
     }
 
     // Update is called once per frame
@@ -38,12 +42,21 @@ public class EnemyUnit : MonoBehaviour
                 nextAttackTime = Time.time + 1f / stats.attackRate;
             }
         }
-        
+
         //Searching
         else
         {
             EnemyDetection();
             nextAttackTime = 0;
+        }
+
+
+        if (currentHP <= 0)
+        {
+            hitBox.enabled = false;
+            Debug.Log(gameObject.name + " is dead!");
+            gameManager.names.Add(gameObject.name);
+            Destroy(gameObject);
         }
     }
 
@@ -56,13 +69,6 @@ public class EnemyUnit : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
-
-        if (currentHP <= 0)
-        {
-            hitBox.enabled = false;
-            Debug.Log(gameObject.name + " is dead!");
-            Destroy(gameObject);
-        }
     }
 
     public void EnemyDetection()
@@ -79,5 +85,23 @@ public class EnemyUnit : MonoBehaviour
                 currentTarget = indentifer;
             }
         }
+    }
+
+    public IEnumerator SpawnTime()
+    {
+        yield return new WaitForSeconds(stats.spawnTimer);
+    }
+
+    public void SpawnUnit(Vector2 spawnPos)
+    {
+        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+    }
+
+    //Giving the unit a random name
+    public void GiveName()
+    {
+        int index = Random.Range(0, gameManager.names.Count);
+        gameObject.name = gameManager.names[index];
+        gameManager.names.RemoveAt(index);
     }
 }

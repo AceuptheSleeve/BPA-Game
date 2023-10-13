@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
-public class Unit : MonoBehaviour
+public class Worker : MonoBehaviour
 {
     public UnitStats stats;
-    public EnemyUnit currentTarget;
+    public GameObject currentTarget;
     public float currentHP, nextAttackTime = 0;//, XP; Leveling System?
     //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
+    bool coal = false, iron = false;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +46,17 @@ public class Unit : MonoBehaviour
         {
             if (Time.time >= nextAttackTime)
             {
-                Attack();
                 nextAttackTime = Time.time + 1f / stats.attackRate;
+
+                if (coal)
+                {
+                    gameManager.coalCount = stats.damage += stats.damage;
+                }
+
+                else if (iron)
+                {
+                    gameManager.ironCount = stats.damage += stats.damage;
+                }
             }
         }
 
@@ -68,12 +77,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Attack()
-    {
-        currentTarget.TakeDamage(stats.damage);
-        Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
-    }
-
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
@@ -81,16 +84,24 @@ public class Unit : MonoBehaviour
 
     public void EnemyDetection()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2 (stats.attackRange, stats.attackRange), 0);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
 
         foreach (Collider2D collider in colliders)
         {
-            EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
-            
-            if (indentifer)
+            if (collider)
             {
-                Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
-                currentTarget = indentifer;
+                Debug.Log(gameObject.name + " has detected " + collider.gameObject.name);
+                currentTarget = collider.gameObject;
+
+                while (collider.gameObject.CompareTag("Coal"))
+                {
+                    coal = true;
+                }
+
+                while (collider.gameObject.CompareTag("Iron"))
+                {
+                    iron = true;
+                }
             }
         }
     }
