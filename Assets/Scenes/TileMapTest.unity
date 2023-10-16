@@ -1483,9 +1483,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUnits: []
   enemyUnits: []
+  resources: []
+  playerWorkers: []
   spawnUnits:
   - {fileID: 6449566303227092647, guid: 54494b0ce4a37ca498ba70dd445e18f0, type: 3}
   - {fileID: 8958024289932295344, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
+  - {fileID: 5210936069138409974, guid: ff6c4b5bded2db34e9401996bc900246, type: 3}
   names: []
   coalCount: 0
   ironCount: 0

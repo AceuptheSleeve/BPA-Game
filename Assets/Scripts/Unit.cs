@@ -9,7 +9,8 @@ public class Unit : MonoBehaviour
     public UnitStats stats;
     public EnemyUnit currentTarget;
     public float currentHP, nextAttackTime = 0;//, XP; Leveling System?
-    //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
+    public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
+    public AudioSource audioSource;
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
@@ -22,6 +23,7 @@ public class Unit : MonoBehaviour
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         GiveName();
@@ -58,9 +60,10 @@ public class Unit : MonoBehaviour
             nextAttackTime = 0;
         }
 
-
+        //Dying
         if (currentHP <= 0)
         {
+            audioSource.PlayOneShot(audioClips[0]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -70,6 +73,7 @@ public class Unit : MonoBehaviour
 
     public void Attack()
     {
+        audioSource.PlayOneShot(audioClips[1]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
@@ -98,12 +102,25 @@ public class Unit : MonoBehaviour
     public IEnumerator SpawnTime()
     {
         yield return new WaitForSeconds(stats.spawnTimer);
+
+        while (true)
+        {
+            Debug.Log(Time.time);
+        }
     }
 
     public void SpawnUnit(Vector2 spawnPos)
     {
         Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
     }
+
+    /*
+    public void DelayedSpawnUnit(Vector2 spawnPos)
+    {
+        StartCoroutine(SpawnTime());
+        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+    }
+    */
 
     //Giving the unit a random name
     public void GiveName()

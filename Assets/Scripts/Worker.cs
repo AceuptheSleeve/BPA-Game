@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
 public class Worker : MonoBehaviour
 {
     public UnitStats stats;
-    public GameObject currentTarget;
+    public Resource currentTarget;
     public float currentHP, nextAttackTime = 0;//, XP; Leveling System?
-    //public AudioClip[] audioClips; preferable have audio and animations whenever a unit is idling, attacking, and when it dies
+    public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
+    public AudioSource audioSource;
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
-    bool coal = false, iron = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class Worker : MonoBehaviour
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         GiveName();
@@ -46,17 +48,8 @@ public class Worker : MonoBehaviour
         {
             if (Time.time >= nextAttackTime)
             {
+                Gather();
                 nextAttackTime = Time.time + 1f / stats.attackRate;
-
-                if (coal)
-                {
-                    gameManager.coalCount = stats.damage += stats.damage;
-                }
-
-                else if (iron)
-                {
-                    gameManager.ironCount = stats.damage += stats.damage;
-                }
             }
         }
 
@@ -77,6 +70,23 @@ public class Worker : MonoBehaviour
         }
     }
 
+    //Mining resources
+    public void Gather()
+    {
+        currentTarget.addToPool(stats.damage);
+
+
+        if (currentTarget.metal == true)
+        {
+            Debug.Log(gameObject.name + " is mining iron, the current amount of iron is " + gameManager.ironCount);
+        }
+
+        else
+        {
+            Debug.Log(gameObject.name + " is mining coal, the current amount of coal is " + gameManager.coalCount);
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         currentHP -= amount;
@@ -88,20 +98,12 @@ public class Worker : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider)
+            Resource indentifer = collider.GetComponent<Resource>();
+
+            if (indentifer)
             {
-                Debug.Log(gameObject.name + " has detected " + collider.gameObject.name);
-                currentTarget = collider.gameObject;
-
-                while (collider.gameObject.CompareTag("Coal"))
-                {
-                    coal = true;
-                }
-
-                while (collider.gameObject.CompareTag("Iron"))
-                {
-                    iron = true;
-                }
+                Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
+                currentTarget = indentifer;
             }
         }
     }
@@ -109,12 +111,25 @@ public class Worker : MonoBehaviour
     public IEnumerator SpawnTime()
     {
         yield return new WaitForSeconds(stats.spawnTimer);
+
+        while (true)
+        {
+            Debug.Log(Time.time);
+        }
     }
 
     public void SpawnUnit(Vector2 spawnPos)
     {
         Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
     }
+
+    /*
+    public void DelayedSpawnUnit(Vector2 spawnPos)
+    {
+        StartCoroutine(SpawnTime());
+        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+    }
+    */
 
     //Giving the unit a random name
     public void GiveName()

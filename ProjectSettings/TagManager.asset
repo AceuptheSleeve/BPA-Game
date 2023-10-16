@@ -7,6 +7,9 @@ TagManager:
   - Unit
   - Enemy
   - Building
+  - Worker
+  - Coal
+  - Iron
   layers:
   - Default
   - TransparentFX
