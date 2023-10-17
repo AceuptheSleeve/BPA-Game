@@ -64,6 +64,7 @@ public class EnemyUnit : MonoBehaviour
         }
     }
 
+    //Attacking enemies
     public void Attack()
     {
         audioSource.PlayOneShot(audioClips[1]);
@@ -71,6 +72,7 @@ public class EnemyUnit : MonoBehaviour
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
 
+    //Taking and dealing damage
     public void TakeDamage(float amount)
     {
         currentHP -= amount;

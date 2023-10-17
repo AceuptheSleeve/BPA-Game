@@ -43,7 +43,7 @@ public class Worker : MonoBehaviour
             Debug.Log("Moving " + gameObject.name + " to " + newPos);
         }
 
-        //Attacking when possible
+        //Attacking when there's a target
         if (currentTarget != null)
         {
             if (Time.time >= nextAttackTime)
@@ -60,7 +60,7 @@ public class Worker : MonoBehaviour
             nextAttackTime = 0;
         }
 
-
+        //Dying
         if (currentHP <= 0)
         {
             hitBox.enabled = false;
@@ -92,6 +92,8 @@ public class Worker : MonoBehaviour
         currentHP -= amount;
     }
 
+
+    //More like resource detection, but consistency ig
     public void EnemyDetection()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
@@ -108,6 +110,8 @@ public class Worker : MonoBehaviour
         }
     }
 
+
+    //Cannot get working, units will not spawn in after spawntimer ends
     public IEnumerator SpawnTime()
     {
         yield return new WaitForSeconds(stats.spawnTimer);

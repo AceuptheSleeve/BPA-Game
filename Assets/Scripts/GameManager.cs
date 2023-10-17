@@ -17,12 +17,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //Establishes the name list
         string[] lines = File.ReadAllLines(Path.Combine(Application.dataPath, "names.txt"));
         foreach (string line in lines)
         {
             string[] subs = line.Split("  ");
             names.Add(subs[0]);
         }
+
+        //Resources need work, workers do not add to the total pile when they harvest
+        coalCount = 0;
+        ironCount = 0;
+        electricCount = 0;
 
         coalCap = 100;
         ironCap = 100;
@@ -35,11 +41,13 @@ public class GameManager : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var input = Input.inputString;
 
+        //Keeping tabs on all objects at once
         playerUnits = FindObjectsOfType<Unit>();
         playerWorkers = FindObjectsOfType<Worker>();
         enemyUnits = FindObjectsOfType<EnemyUnit>();
         resources = FindObjectsOfType<Resource>();
 
+        //Spawn tool
         switch (input)
         {
             case "1":
