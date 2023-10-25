@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Unit[] playerUnits;
-    public EnemyUnit[] enemyUnits;
-    public Resource[] resources;
-    public Worker[] playerWorkers;
+    public GameObject[] playerUnits;
+    public GameObject[] playerWorkers;
+    public GameObject[] enemyUnits;
     private Vector2 mousePos;
     public List<GameObject> spawnUnits = new List<GameObject>();
     public List<string> names = new List<string>();
@@ -42,10 +41,9 @@ public class GameManager : MonoBehaviour
         var input = Input.inputString;
 
         //Keeping tabs on all objects at once
-        playerUnits = FindObjectsOfType<Unit>();
-        playerWorkers = FindObjectsOfType<Worker>();
-        enemyUnits = FindObjectsOfType<EnemyUnit>();
-        resources = FindObjectsOfType<Resource>();
+        playerUnits = GameObject.FindGameObjectsWithTag("Unit");
+        playerWorkers = GameObject.FindGameObjectsWithTag("Worker");
+        enemyUnits = GameObject.FindGameObjectsWithTag("Enemy");
 
         //Spawn tool
         switch (input)
@@ -61,7 +59,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case "3":
-                Worker worker = spawnUnits[2].GetComponent<Worker>();
+                Unit worker = spawnUnits[2].GetComponent<Unit>();
                 worker.SpawnUnit(mousePos);
                 break;
         }

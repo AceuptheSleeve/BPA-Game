@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb5e3204569751f45860e3c38ca942cc, type: 3}
-  m_Name: WorkerData
+  m_Name: IronResourceData
   m_EditorClassIdentifier: 
-  unitName: Worker
-  totalHP: 15
+  unitName: Iron Deposit
+  totalHP: 100000
   damage: 0
-  attackRate: 2
-  attackRange: 5
-  speed: 5
-  spawnTimer: 4.5
-  worker: 1
+  attackRate: 0
+  attackRange: 0
+  speed: 0
+  spawnTimer: 0
+  worker: 0
   building: 0
+  iron: 1
+  coal: 0

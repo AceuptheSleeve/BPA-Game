@@ -48,8 +48,17 @@ public class Unit : MonoBehaviour
         {
             if (Time.time >= nextAttackTime)
             {
-                Attack();
-                nextAttackTime = Time.time + 1f / stats.attackRate;
+                if (!stats.worker)
+                {
+                    Attack();
+                    nextAttackTime = Time.time + 1f / stats.attackRate;
+                }
+
+                else
+                {
+                    Gather();
+                    nextAttackTime = Time.time + 1f / stats.attackRate;
+                }
             }
         }
 
@@ -79,6 +88,13 @@ public class Unit : MonoBehaviour
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
 
+    //If the unit is a worker, it'll gather nearby resources instead of attacking hostile units. Not working right now
+    public void Gather()
+    {
+        gameManager.coalCount = gameManager.coalCount += stats.damage;
+        Debug.Log(gameObject.name+ " added " +stats.damage+ " to the total");
+    }
+
     //Taking and dealing damage
     public void TakeDamage(float amount)
     {
@@ -92,10 +108,22 @@ public class Unit : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
             EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
-            
-            if (indentifer)
+
+            if (indentifer && !stats.worker)
             {
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
+                currentTarget = indentifer;
+            }
+
+            else if (indentifer.stats.coal)
+            {
+                Debug.Log(gameObject.name + " has detected a coal deposit at " + indentifer.transform.position);
+                currentTarget = indentifer;
+            }
+
+            else if (indentifer.stats.iron)
+            {
+                Debug.Log(gameObject.name + " has detected a iron deposit at " + indentifer.transform.position);
                 currentTarget = indentifer;
             }
         }
