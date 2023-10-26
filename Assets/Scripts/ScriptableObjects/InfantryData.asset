@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Line Infantry
   totalHP: 25
+  electricUsage: 4
   damage: 5
   attackRate: 2
   attackRange: 5
   speed: 3
   spawnTimer: 2.5
+  worker: 0
+  building: 0
+  iron: 0
+  coal: 0

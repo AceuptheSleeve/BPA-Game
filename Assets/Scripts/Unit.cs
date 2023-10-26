@@ -115,16 +115,19 @@ public class Unit : MonoBehaviour
                 currentTarget = indentifer;
             }
 
-            else if (indentifer.stats.coal)
+            else if (indentifer && stats.worker)
             {
-                Debug.Log(gameObject.name + " has detected a coal deposit at " + indentifer.transform.position);
-                currentTarget = indentifer;
-            }
+                if (indentifer.stats.coal)
+                {
+                    Debug.Log(gameObject.name + " has detected a coal deposit at " + indentifer.transform.position);
+                    currentTarget = indentifer;
+                }
 
-            else if (indentifer.stats.iron)
-            {
-                Debug.Log(gameObject.name + " has detected a iron deposit at " + indentifer.transform.position);
-                currentTarget = indentifer;
+                else if (indentifer.stats.iron)
+                {
+                    Debug.Log(gameObject.name + " has detected a iron deposit at " + indentifer.transform.position);
+                    currentTarget = indentifer;
+                }
             }
         }
     }
