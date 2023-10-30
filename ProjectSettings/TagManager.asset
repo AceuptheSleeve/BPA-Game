@@ -8,8 +8,7 @@ TagManager:
   - Enemy
   - Building
   - Worker
-  - Coal
-  - Iron
+  - Resource
   layers:
   - Default
   - TransparentFX

@@ -26,8 +26,24 @@ public class Unit : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        GiveName();
-        Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in!");
+
+        if (stats.building)
+        {
+            Debug.Log("The HQ was successfully spawned in at " +transform.position+ "!");
+        }
+
+        else if (stats.worker)
+        {
+            Debug.Log(gameObject.name+ " has been spawned in at " +transform.position+ "!");
+        }
+
+        else
+        {
+            GiveName();
+            Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " +transform.position+ "!");
+            gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
+        }
+
     }
 
     // Update is called once per frame
@@ -72,10 +88,11 @@ public class Unit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            audioSource.PlayOneShot(audioClips[0]);
+            //audioSource.PlayOneShot(audioClips[0]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
+            gameManager.electricPool = gameManager.electricPool += stats.electricUsage;
             Destroy(gameObject);
         }
     }
@@ -83,7 +100,7 @@ public class Unit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        audioSource.PlayOneShot(audioClips[1]);
+        //audioSource.PlayOneShot(audioClips[1]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
@@ -91,8 +108,17 @@ public class Unit : MonoBehaviour
     //If the unit is a worker, it'll gather nearby resources instead of attacking hostile units. Not working right now
     public void Gather()
     {
-        gameManager.coalCount = gameManager.coalCount += stats.damage;
-        Debug.Log(gameObject.name+ " added " +stats.damage+ " to the total");
+        if (currentTarget.stats.coal)
+        {
+            gameManager.currentCoal = gameManager.currentCoal += stats.damage;
+            Debug.Log(gameObject.name + " added " + stats.damage + " to the coal total. The total is now " + gameManager.currentCoal);
+        }
+
+        else if (currentTarget.stats.iron)
+        {
+            gameManager.currentIron = gameManager.currentIron += stats.damage / 2f;
+            Debug.Log(gameObject.name + " added " + stats.damage + " to the coal total. The total is now " + gameManager.currentIron);
+        }
     }
 
     //Taking and dealing damage
@@ -109,7 +135,7 @@ public class Unit : MonoBehaviour
         {
             EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
 
-            if (indentifer && !stats.worker)
+            if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;

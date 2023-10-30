@@ -16,7 +16,7 @@ MonoBehaviour:
   totalHP: 25
   electricUsage: 4
   damage: 5
-  attackRate: 2
+  attackRate: 2.5
   attackRange: 5
   speed: 3
   spawnTimer: 2.5

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private Vector2 mousePos;
     public List<GameObject> spawnUnits = new List<GameObject>();
     public List<string> names = new List<string>();
-    public float coalCount, ironCount, electricCount, coalCap, ironCap, electricCap;
+    public float currentCoal, currentIron, coalCap, ironCap, electricPool;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,14 +24,12 @@ public class GameManager : MonoBehaviour
             names.Add(subs[0]);
         }
 
-        //Resources need work, workers do not add to the total pile when they harvest
-        coalCount = 0;
-        ironCount = 0;
-        electricCount = 0;
-
+        //Resources
         coalCap = 100;
         ironCap = 100;
-        electricCap = 100;
+        electricPool = 100;
+        currentCoal = 0;
+        currentIron = 0;
     }
 
     // Update is called once per frame
@@ -62,6 +60,27 @@ public class GameManager : MonoBehaviour
                 Unit worker = spawnUnits[2].GetComponent<Unit>();
                 worker.SpawnUnit(mousePos);
                 break;
+
+            case "4":
+                EnemyUnit coal = spawnUnits[3].GetComponent<EnemyUnit>();
+                coal.SpawnUnit(mousePos);
+                break;
+
+            case "5":
+                EnemyUnit iron = spawnUnits[4].GetComponent<EnemyUnit>();
+                iron.SpawnUnit(mousePos);
+                break;
+        }
+
+        //Setting resource caps
+        if (currentCoal >= coalCap)
+        {
+            currentCoal = coalCap;
+        }
+
+        if (currentIron >= ironCap)
+        {
+            currentIron = ironCap;
         }
     }
 }

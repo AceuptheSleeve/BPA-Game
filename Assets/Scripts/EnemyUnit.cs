@@ -26,8 +26,17 @@ public class EnemyUnit : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        GiveName();
-        Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in!");
+
+        if (stats.iron || stats.coal)
+        {
+            Debug.Log(gameObject.name+ " has spawned in!");
+        }
+
+        else
+        {
+            GiveName();
+            Debug.Log(stats.unitName+ ", " +gameObject.name+ " has been spawned in at " +transform.position+ "!");
+        }
     }
 
     // Update is called once per frame
@@ -56,7 +65,7 @@ public class EnemyUnit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            audioSource.PlayOneShot(audioClips[0]);
+            //audioSource.PlayOneShot(audioClips[0]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -67,7 +76,7 @@ public class EnemyUnit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        audioSource.PlayOneShot(audioClips[1]);
+        //audioSource.PlayOneShot(audioClips[1]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
