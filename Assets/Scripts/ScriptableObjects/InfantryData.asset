@@ -15,7 +15,7 @@ MonoBehaviour:
   unitName: Line Infantry
   totalHP: 25
   electricUsage: 4
-  damage: 5
+  damage: 0
   attackRate: 2.5
   attackRange: 5
   speed: 3

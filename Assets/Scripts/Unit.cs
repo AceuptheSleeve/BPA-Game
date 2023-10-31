@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class Unit : MonoBehaviour
 {
     public UnitStats stats;
     public EnemyUnit currentTarget;
-    public float currentHP, nextAttackTime = 0;//, XP; Leveling System?
+    public float currentHP, distanceToTarget,nextAttackTime = 0;//, XP; Leveling System?
     public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
     public AudioSource audioSource;
     public TilemapCollider2D tilemapCollider;
@@ -62,7 +63,11 @@ public class Unit : MonoBehaviour
         //Attacking when possible
         if (currentTarget != null)
         {
-            if (Time.time >= nextAttackTime)
+            //Establishes a distance between the unit and its target
+            distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
+
+            //Attack when in range
+            if (Time.time >= nextAttackTime && distanceToTarget <= stats.attackRange)
             {
                 if (!stats.worker)
                 {
@@ -76,6 +81,13 @@ public class Unit : MonoBehaviour
                     nextAttackTime = Time.time + 1f / stats.attackRate;
                 }
             }
+
+            //Remove target when the target is out of range
+            if (distanceToTarget > stats.attackRange)
+            {
+                Debug.Log(gameObject.name+ " has lost sight of " +currentTarget.name);
+                currentTarget = null;
+            }
         }
 
         //Searching
@@ -83,6 +95,7 @@ public class Unit : MonoBehaviour
         {
             EnemyDetection();
             nextAttackTime = 0;
+            distanceToTarget = 0;
         }
 
         //Dying
@@ -133,6 +146,7 @@ public class Unit : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
+
             EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
 
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
@@ -184,7 +198,7 @@ public class Unit : MonoBehaviour
     //Giving the unit a random name
     public void GiveName()
     {
-        int index = Random.Range(0, gameManager.names.Count);
+        int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
     }
