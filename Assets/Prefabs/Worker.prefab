@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2474146700253435268}
   - component: {fileID: 3714267398637491752}
   - component: {fileID: 3258444509273493906}
+  - component: {fileID: -6767701944684415354}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Worker
@@ -178,6 +179,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 7f11765c47e005243b440c8d336f342f, type: 2}
   currentTarget: {fileID: 0}
   currentHP: 0
+  distanceToTarget: 0
   nextAttackTime: 0
   audioClips:
   - {fileID: 8300000, guid: bf572c9e0799f1f4ab28463197e1a248, type: 3}
@@ -327,3 +329,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &-6767701944684415354
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747486556705329604}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.50000006
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.9999999
+  m_BaseOffset: 0.99999994
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

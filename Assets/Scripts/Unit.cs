@@ -16,48 +16,52 @@ public class Unit : MonoBehaviour
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
+    public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigning values
+        agent = GetComponent<NavMeshAgent>();
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
+        agent.speed = stats.speed * Time.deltaTime;
+        agent.acceleration = 3 * stats.speed * Time.deltaTime;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         if (stats.building)
         {
-            Debug.Log("The HQ was successfully spawned in at " +transform.position+ "!");
+            Debug.Log("The HQ was successfully spawned in at " + new Vector2(transform.position.x, transform.position.y)+ "!");
         }
 
         else if (stats.worker)
         {
-            Debug.Log(gameObject.name+ " has been spawned in at " +transform.position+ "!");
+            Debug.Log(gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
+            gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
         }
 
         else
         {
             GiveName();
-            Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " +transform.position+ "!");
+            Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
         }
-
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
         Debug.DrawLine(transform.position, newPos);
 
         //The unit will move to the mouse position on right click
         if (Input.GetMouseButtonDown(0))
         {
-            newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log("Moving " + gameObject.name + " to " + newPos);
+            agent.SetDestination(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            newPos = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
+            Debug.Log("Moving " + gameObject.name + " to " +newPos);
         }
 
         //Attacking when possible
