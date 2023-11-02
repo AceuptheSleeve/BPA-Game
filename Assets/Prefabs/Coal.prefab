@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 6
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4528302, g: 0.4386486, b: 0.4207903, a: 1}
   m_FlipX: 0
@@ -178,12 +178,14 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 50c2942a7e3702447be96c7e8b425ed5, type: 2}
   currentTarget: {fileID: 0}
   currentHP: 0
+  distanceToTarget: 0
   nextAttackTime: 0
   audioClips: []
   audioSource: {fileID: 8738947842925807163}
   tilemapCollider: {fileID: 4005838390519419674}
   hitBox: {fileID: 3636234525944710622}
   gameManager: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!61 &3636234525944710622
 BoxCollider2D:
   m_ObjectHideFlags: 0

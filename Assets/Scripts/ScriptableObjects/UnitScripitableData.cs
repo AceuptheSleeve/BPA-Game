@@ -6,7 +6,7 @@ using UnityEngine;
 public class UnitStats : ScriptableObject
 {
     public string unitName;
-    public int totalHP, electricUsage;
-    public float damage, attackRate, attackRange, speed, spawnTimer;
+    public int totalHP, electricUsage, coalCost, ironCost;
+    public float damage, attackRate, attackRange, speed, spawnTime;
     public bool worker, building, iron, coal;
 }

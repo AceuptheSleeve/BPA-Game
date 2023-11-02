@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
     public GameObject[] playerUnits;
     public GameObject[] playerWorkers;
     public GameObject[] enemyUnits;
-    private Vector2 mousePos;
     public List<GameObject> spawnUnits = new List<GameObject>();
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
+    public PlayerController playerController;
 
     // Start is called before the first frame update
     void Awake()
     {
+        playerController = Camera.main.GetComponent<PlayerController>();
+
         //Establishes the name list
         string[] lines = File.ReadAllLines(Path.Combine(Application.dataPath, "names.txt"));
         foreach (string line in lines)
@@ -35,40 +37,37 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var input = Input.inputString;
-
         //Keeping tabs on all objects at once
         playerUnits = GameObject.FindGameObjectsWithTag("Unit");
         playerWorkers = GameObject.FindGameObjectsWithTag("Worker");
         enemyUnits = GameObject.FindGameObjectsWithTag("Enemy");
 
         //Spawn tool
-        switch (input)
+        switch (Input.inputString)
         {
             case "1":
                 Unit unit1 = spawnUnits[0].GetComponent<Unit>();
-                unit1.SpawnUnit(mousePos);
+                unit1.SpawnUnit(playerController.mousePos);
                 break;
 
             case "2":
                 EnemyUnit enemyUnit1 = spawnUnits[1].GetComponent<EnemyUnit>();
-                enemyUnit1.SpawnUnit(mousePos);
+                enemyUnit1.SpawnUnit(playerController.mousePos);
                 break;
 
             case "3":
                 Unit worker = spawnUnits[2].GetComponent<Unit>();
-                worker.SpawnUnit(mousePos);
+                worker.SpawnUnit(playerController.mousePos);
                 break;
 
             case "4":
                 EnemyUnit coal = spawnUnits[3].GetComponent<EnemyUnit>();
-                coal.SpawnUnit(mousePos);
+                coal.SpawnUnit(playerController.mousePos);
                 break;
 
             case "5":
                 EnemyUnit iron = spawnUnits[4].GetComponent<EnemyUnit>();
-                iron.SpawnUnit(mousePos);
+                iron.SpawnUnit(playerController.mousePos);
                 break;
         }
 

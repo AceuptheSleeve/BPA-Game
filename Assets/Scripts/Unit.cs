@@ -14,22 +14,20 @@ public class Unit : MonoBehaviour
     public AudioSource audioSource;
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
+    public PlayerController playerController;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
-    public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigning values
-        agent = GetComponent<NavMeshAgent>();
+        playerController = Camera.main.GetComponent<PlayerController>();
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
-        agent.speed = stats.speed * Time.deltaTime;
-        agent.acceleration = 3 * stats.speed * Time.deltaTime;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         if (stats.building)
@@ -55,12 +53,12 @@ public class Unit : MonoBehaviour
     void LateUpdate()
     {
         Debug.DrawLine(transform.position, newPos);
+        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
         //The unit will move to the mouse position on right click
         if (Input.GetMouseButtonDown(0))
         {
-            agent.SetDestination(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            newPos = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
+            newPos = playerController.mousePos;
             Debug.Log("Moving " + gameObject.name + " to " +newPos);
         }
 
@@ -178,7 +176,7 @@ public class Unit : MonoBehaviour
 
     public IEnumerator SpawnTime()
     {
-        yield return new WaitForSeconds(stats.spawnTimer);
+        yield return new WaitForSeconds(stats.spawnTime);
 
         while (true)
         {
@@ -188,16 +186,14 @@ public class Unit : MonoBehaviour
 
     public void SpawnUnit(Vector2 spawnPos)
     {
-        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+        Instantiate(gameObject, spawnPos, new Quaternion());
     }
 
-    /*
     public void DelayedSpawnUnit(Vector2 spawnPos)
     {
-        StartCoroutine(SpawnTime());
-        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+        Debug.Log("Yes, this will spawn in after " + stats.spawnTime);
+        Invoke("SpawnUnit(spawnPos)", stats.spawnTime);
     }
-    */
 
     //Giving the unit a random name
     public void GiveName()

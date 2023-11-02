@@ -17,10 +17,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); ;
-
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+
+        Camera.main.orthographicSize -= scrollInput * 8f * 100f * Time.deltaTime;
 
         //Movement
         if (horizontalInput != 0)

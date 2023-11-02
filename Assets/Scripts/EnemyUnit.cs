@@ -16,39 +16,35 @@ public class EnemyUnit : MonoBehaviour
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
-    public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigning values
-        agent = GetComponent<NavMeshAgent>();
         tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
-        agent.speed = stats.speed * Time.deltaTime;
-        agent.acceleration = 3 * stats.speed * Time.deltaTime;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
         {
-            Debug.Log(gameObject.name+ " has spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
+            Debug.Log(gameObject.name + " has spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
 
         else
         {
             GiveName();
-            Debug.Log(stats.unitName+ ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
+            Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, newPos, agent.speed);
+        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
         //Attacking when possible
         if (currentTarget != null)
@@ -122,28 +118,16 @@ public class EnemyUnit : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnTime()
-    {
-        yield return new WaitForSeconds(stats.spawnTimer);
-
-        while (true)
-        {
-            Debug.Log(Time.time);
-        }
-    }
-
     public void SpawnUnit(Vector2 spawnPos)
     {
-        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+        Instantiate(gameObject, spawnPos, new Quaternion());
     }
 
-    /*
     public void DelayedSpawnUnit(Vector2 spawnPos)
     {
-        StartCoroutine(SpawnTime());
-        Instantiate(gameObject, spawnPos, new Quaternion(0, 0, 0, 0));
+        Debug.Log("Yes, this will spawn in after " +stats.spawnTime);
+        Invoke("SpawnUnit("+spawnPos+")", stats.spawnTime);
     }
-    */
 
     //Giving the unit a random name
     public void GiveName()
