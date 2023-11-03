@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -55,11 +56,24 @@ public class Unit : MonoBehaviour
         Debug.DrawLine(transform.position, newPos);
         transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
-        //The unit will move to the mouse position on right click
+        //The unit will move to the mouse position on right click (left click right now for testing purposes) 
         if (Input.GetMouseButtonDown(0))
         {
-            newPos = playerController.mousePos;
-            Debug.Log("Moving " + gameObject.name + " to " +newPos);
+            Vector3Int gridPos = gameManager.map.WorldToCell(playerController.mousePos);
+
+            RaycastHit2D castPos = Physics2D.Raycast(Camera.main.transform.position, new Vector2(gridPos.x, gridPos.y));
+
+            if (CheckSpace(castPos.transform.gameObject))
+            {
+                newPos = new Vector2(castPos.transform.gameObject.transform.position.x, castPos.transform.gameObject.transform.position.y);
+                Debug.Log("Moving " + gameObject.name + " to " + newPos);
+            }
+
+            else
+            {
+                Debug.Log(gameObject.name + " tried to move to an invalid position");
+            }
+
         }
 
         //Attacking when possible
@@ -144,7 +158,7 @@ public class Unit : MonoBehaviour
 
     public void EnemyDetection()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2 (stats.attackRange, stats.attackRange), 0);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
 
         foreach (Collider2D collider in colliders)
         {
@@ -174,6 +188,7 @@ public class Unit : MonoBehaviour
         }
     }
 
+    //Needs work
     public IEnumerator SpawnTime()
     {
         yield return new WaitForSeconds(stats.spawnTime);
@@ -189,6 +204,7 @@ public class Unit : MonoBehaviour
         Instantiate(gameObject, spawnPos, new Quaternion());
     }
 
+    //Needs work
     public void DelayedSpawnUnit(Vector2 spawnPos)
     {
         Debug.Log("Yes, this will spawn in after " + stats.spawnTime);
@@ -201,5 +217,18 @@ public class Unit : MonoBehaviour
         int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
+    }
+
+    public bool CheckSpace(GameObject gameObject)
+    {
+        if (gameObject.layer > 1 && gameObject != null)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
     }
 }

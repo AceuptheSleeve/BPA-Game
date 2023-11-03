@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public class GameManager : MonoBehaviour
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;
+    public Grid map;
+    public Tilemap waterLevel;
 
     // Start is called before the first frame update
     void Awake()
     {
-        playerController = Camera.main.GetComponent<PlayerController>();
 
         //Establishes the name list
         string[] lines = File.ReadAllLines(Path.Combine(Application.dataPath, "names.txt"));
