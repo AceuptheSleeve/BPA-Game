@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class Unit : MonoBehaviour
@@ -13,7 +15,6 @@ public class Unit : MonoBehaviour
     public float currentHP, distanceToTarget,nextAttackTime = 0;//, XP; Leveling System?
     public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
     public AudioSource audioSource;
-    public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     public PlayerController playerController;
     Vector2 newPos = new Vector2();
@@ -24,7 +25,6 @@ public class Unit : MonoBehaviour
     {
         //Assigning values
         playerController = Camera.main.GetComponent<PlayerController>();
-        tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
@@ -59,21 +59,22 @@ public class Unit : MonoBehaviour
         //The unit will move to the mouse position on right click (left click right now for testing purposes) 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3Int gridPos = gameManager.map.WorldToCell(playerController.mousePos);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit2D castPos = Physics2D.Raycast(Camera.main.transform.position, new Vector2(gridPos.x, gridPos.y));
+            Debug.Log("Ray: " + ray);
 
-            if (CheckSpace(castPos.transform.gameObject))
+            Vector3Int gridPos = gameManager.mapLayers[1].WorldToCell(playerController.mousePos);
+
+            if (gameManager.mapLayers[1].HasTile(gridPos))
             {
-                newPos = new Vector2(castPos.transform.gameObject.transform.position.x, castPos.transform.gameObject.transform.position.y);
+                newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
             }
 
             else
             {
-                Debug.Log(gameObject.name + " tried to move to an invalid position");
+                Debug.Log(gameObject.name + " tried to move to an invalid position at " +new Vector2(playerController.mousePos.x, playerController.mousePos.y));
             }
-
         }
 
         //Attacking when possible
@@ -217,18 +218,5 @@ public class Unit : MonoBehaviour
         int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
-    }
-
-    public bool CheckSpace(GameObject gameObject)
-    {
-        if (gameObject.layer > 1 && gameObject != null)
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
     }
 }

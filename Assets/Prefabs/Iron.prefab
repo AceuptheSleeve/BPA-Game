@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3607673496548546329}
   - component: {fileID: 5270299464722496065}
   - component: {fileID: 2640077012537859420}
-  - component: {fileID: 5215673656082142705}
   - component: {fileID: 5818574969252481261}
   - component: {fileID: 8880405154520766459}
   - component: {fileID: 2704432033844983719}
@@ -127,42 +126,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!19719996 &5215673656082142705
-TilemapCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5772010254110715320}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!114 &5818574969252481261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,10 +145,9 @@ MonoBehaviour:
   nextAttackTime: 0
   audioClips: []
   audioSource: {fileID: 2704432033844983719}
-  tilemapCollider: {fileID: 5215673656082142705}
+  tilemapCollider: {fileID: 0}
   hitBox: {fileID: 8880405154520766459}
   gameManager: {fileID: 0}
-  agent: {fileID: 0}
 --- !u!61 &8880405154520766459
 BoxCollider2D:
   m_ObjectHideFlags: 0

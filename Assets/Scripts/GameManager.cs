@@ -13,8 +13,7 @@ public class GameManager : MonoBehaviour
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;
-    public Grid map;
-    public Tilemap waterLevel;
+    public Tilemap[] mapLayers;
 
     // Start is called before the first frame update
     void Awake()
