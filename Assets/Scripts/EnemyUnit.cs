@@ -101,6 +101,7 @@ public class EnemyUnit : MonoBehaviour
         currentHP -= amount;
     }
 
+    //Since the 'enemy' don't need to gather resources, they can only detect player units
     public void EnemyDetection()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
@@ -123,11 +124,13 @@ public class EnemyUnit : MonoBehaviour
         Instantiate(gameObject, spawnPos, new Quaternion());
     }
 
+    /* Needs work, currently rendered inactive
     public void DelayedSpawnUnit(Vector2 spawnPos)
     {
-        Debug.Log("Yes, this will spawn in after " +stats.spawnTime);
-        Invoke("SpawnUnit("+spawnPos+")", stats.spawnTime);
+        Debug.Log("Yes, this will spawn in after " + stats.spawnTime);
+        Invoke("SpawnUnit(spawnPos)", stats.spawnTime);
     }
+    */
 
     //Giving the unit a random name
     public void GiveName()

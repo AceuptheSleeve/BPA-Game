@@ -46,33 +46,34 @@ public class GameManager : MonoBehaviour
         //Spawn tool
         switch (Input.inputString)
         {
+            //Player Infantry spawn (one for now)
             case "1":
                 Unit unit1 = spawnUnits[0].GetComponent<Unit>();
                 unit1.SpawnUnit(playerController.mousePos);
                 break;
-
+            //Enemy spawning
             case "2":
                 EnemyUnit enemyUnit1 = spawnUnits[1].GetComponent<EnemyUnit>();
                 enemyUnit1.SpawnUnit(playerController.mousePos);
                 break;
-
+            //Player worker spawn
             case "3":
                 Unit worker = spawnUnits[2].GetComponent<Unit>();
                 worker.SpawnUnit(playerController.mousePos);
                 break;
-
+            //Coal resource spawn
             case "4":
                 EnemyUnit coal = spawnUnits[3].GetComponent<EnemyUnit>();
                 coal.SpawnUnit(playerController.mousePos);
                 break;
-
+            //Iron resource spawn
             case "5":
                 EnemyUnit iron = spawnUnits[4].GetComponent<EnemyUnit>();
                 iron.SpawnUnit(playerController.mousePos);
                 break;
         }
 
-        //Setting resource caps
+        //Enforcing resource caps
         if (currentCoal >= coalCap)
         {
             currentCoal = coalCap;

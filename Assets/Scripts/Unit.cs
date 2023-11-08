@@ -31,17 +31,20 @@ public class Unit : MonoBehaviour
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
+        //Building spawn
         if (stats.building)
         {
             Debug.Log("The HQ was successfully spawned in at " + new Vector2(transform.position.x, transform.position.y)+ "!");
         }
 
+        //Worker spawn
         else if (stats.worker)
         {
             Debug.Log(gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
         }
 
+        //Everything else that spawns
         else
         {
             GiveName();
@@ -59,21 +62,19 @@ public class Unit : MonoBehaviour
         //The unit will move to the mouse position on right click (left click right now for testing purposes) 
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            Debug.Log("Ray: " + ray);
-
             Vector3Int gridPos = gameManager.mapLayers[1].WorldToCell(playerController.mousePos);
 
+            //Check if the movement position is valid
             if (gameManager.mapLayers[1].HasTile(gridPos))
             {
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
             }
 
+            //Gives the debug for where the invaild location is
             else
             {
-                Debug.Log(gameObject.name + " tried to move to an invalid position at " +new Vector2(playerController.mousePos.x, playerController.mousePos.y));
+                Debug.Log(gameObject.name + " tried to move to an invalid position at " +playerController.mousePos);
             }
         }
 
@@ -92,6 +93,7 @@ public class Unit : MonoBehaviour
                     nextAttackTime = Time.time + 1f / stats.attackRate;
                 }
 
+                //Workers use the gather method instead of ordinary attacks since they can't fight
                 else
                 {
                     Gather();
@@ -135,7 +137,7 @@ public class Unit : MonoBehaviour
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
 
-    //If the unit is a worker, it'll gather nearby resources instead of attacking hostile units. Not working right now
+    //Gather nearby resources instead of attacking hostile units
     public void Gather()
     {
         if (currentTarget.stats.coal)
@@ -166,12 +168,14 @@ public class Unit : MonoBehaviour
 
             EnemyUnit indentifer = collider.GetComponent<EnemyUnit>();
 
+            //Unit detection
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }
 
+            //Resource detection
             else if (indentifer && stats.worker)
             {
                 if (indentifer.stats.coal)
@@ -189,7 +193,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    //Needs work
+    /* Needs work, currently rendered inactive
     public IEnumerator SpawnTime()
     {
         yield return new WaitForSeconds(stats.spawnTime);
@@ -199,18 +203,19 @@ public class Unit : MonoBehaviour
             Debug.Log(Time.time);
         }
     }
-
+    */
     public void SpawnUnit(Vector2 spawnPos)
     {
         Instantiate(gameObject, spawnPos, new Quaternion());
     }
 
-    //Needs work
+    /* Needs work, currently rendered inactive
     public void DelayedSpawnUnit(Vector2 spawnPos)
     {
         Debug.Log("Yes, this will spawn in after " + stats.spawnTime);
         Invoke("SpawnUnit(spawnPos)", stats.spawnTime);
     }
+    */
 
     //Giving the unit a random name
     public void GiveName()
