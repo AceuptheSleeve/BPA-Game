@@ -146,8 +146,15 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: bf572c9e0799f1f4ab28463197e1a248, type: 3}
   - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
+  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
   audioSource: {fileID: 3258444509273493906}
-  tilemapCollider: {fileID: 0}
   hitBox: {fileID: 3714267398637491752}
   playerController: {fileID: 0}
   gameManager: {fileID: 0}
