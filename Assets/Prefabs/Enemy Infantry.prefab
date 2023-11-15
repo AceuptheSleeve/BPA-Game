@@ -144,7 +144,7 @@ MonoBehaviour:
   distanceToTarget: 0
   nextAttackTime: 0
   audioClips:
-  - {fileID: 8300000, guid: bf572c9e0799f1f4ab28463197e1a248, type: 3}
+  - {fileID: 8300000, guid: a90663aacf9a82d43b9c8d7bced08b40, type: 3}
   - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
   - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
   - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}

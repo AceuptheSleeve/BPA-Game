@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62778cc59adeb07409c5b84bc7cf80bc
+guid: d15783096e5ad4e44b14b562fcfe2434
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,43 +110,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TileMapIdea_0
+      name: Infantry_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fa7caf43e4ecf342a6923714f2b0a83
-      internalID: -452656160
+      spriteID: eed6c223e8bd66c4b8e9e4a496d00bf2
+      internalID: -803368834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TileMapIdea_1
+      name: Infantry_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.5, y: 0.75}
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06354b15d91276849936de4a32e19558
-      internalID: -1634419357
+      spriteID: 874e7008cf73bf849b34ce9490bff21d
+      internalID: 63552960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Infantry_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8bae632e4402e9418ec8f175b3e8673
+      internalID: -872105539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Infantry_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c46d5b3852e4d8d4db3bfa7de4b1ee20
+      internalID: 1067059446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Infantry_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 561b72d89eb64ef42a2b2dfad90311da
+      internalID: 271953439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Infantry_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144f6170b0c69564fa03c9b8de8f1b1a
+      internalID: 656227392
       vertices: []
       indices: 
       edges: []
@@ -162,8 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TileMapIdea_0: -452656160
-      TileMapIdea_1: -1634419357
+      Infantry_0: -803368834
+      Infantry_1: 63552960
+      Infantry_2: -872105539
+      Infantry_3: 1067059446
+      Infantry_4: 271953439
+      Infantry_5: 656227392
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

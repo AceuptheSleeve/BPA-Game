@@ -67,6 +67,7 @@ public class Unit : MonoBehaviour
             //Check if the movement position is valid
             if (gameManager.mapLayers[1].HasTile(gridPos))
             {
+                audioSource.PlayOneShot(audioClips[UnityEngine.Random.Range(1, 4)]);
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
             }
@@ -121,7 +122,7 @@ public class Unit : MonoBehaviour
         if (currentHP <= 0)
         {
             int index = UnityEngine.Random.Range(0, gameManager.names.Count);
-            audioSource.PlayOneShot(audioClips[0]);
+            //audioSource.PlayOneShot(audioClips[0]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -133,7 +134,7 @@ public class Unit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        audioSource.PlayOneShot(audioClips[1]);
+        audioSource.PlayOneShot(audioClips[0]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
@@ -172,7 +173,7 @@ public class Unit : MonoBehaviour
             //Unit detection
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
-                audioSource.PlayOneShot(audioClips[0]);
+                //audioSource.PlayOneShot(audioClips[0]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }

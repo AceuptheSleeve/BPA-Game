@@ -90,7 +90,7 @@ public class EnemyUnit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        //audioSource.PlayOneShot(audioClips[1]);
+        audioSource.PlayOneShot(audioClips[0]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
@@ -113,6 +113,7 @@ public class EnemyUnit : MonoBehaviour
 
             if (indentifer)
             {
+                //audioSource.PlayOneShot(audioClips[0]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }
