@@ -10,7 +10,6 @@ public class EnemyUnit : MonoBehaviour
     public UnitStats stats;
     public Unit currentTarget;
     public float currentHP, distanceToTarget, nextAttackTime = 0;//, XP; Leveling System?
-    public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
     public AudioSource audioSource;
     public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
@@ -79,7 +78,7 @@ public class EnemyUnit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            //audioSource.PlayOneShot(audioClips[0]);
+            audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(11, 14)]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -90,7 +89,7 @@ public class EnemyUnit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        audioSource.PlayOneShot(audioClips[0]);
+        audioSource.PlayOneShot(gameManager.soundBank[0]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }

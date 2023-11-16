@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;
     public Tilemap[] mapLayers;
+    public AudioClip[] soundBank;
 
     // Start is called before the first frame update
     void Awake()

@@ -13,7 +13,6 @@ public class Unit : MonoBehaviour
     public UnitStats stats;
     public EnemyUnit currentTarget;
     public float currentHP, distanceToTarget,nextAttackTime = 0;//, XP; Leveling System?
-    public AudioClip[] audioClips; //Have audio and animations whenever a unit is idling, attacking, and when it dies?
     public AudioSource audioSource;
     public BoxCollider2D hitBox;
     public PlayerController playerController;
@@ -67,7 +66,7 @@ public class Unit : MonoBehaviour
             //Check if the movement position is valid
             if (gameManager.mapLayers[1].HasTile(gridPos))
             {
-                audioSource.PlayOneShot(audioClips[UnityEngine.Random.Range(1, 4)]);
+                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(1, 4)]);
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
             }
@@ -75,6 +74,7 @@ public class Unit : MonoBehaviour
             //Gives the debug for where the invaild location is
             else
             {
+                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(4, 6)]);
                 Debug.Log(gameObject.name + " tried to move to an invalid position at " +playerController.mousePos);
             }
         }
@@ -121,8 +121,7 @@ public class Unit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            int index = UnityEngine.Random.Range(0, gameManager.names.Count);
-            //audioSource.PlayOneShot(audioClips[0]);
+            audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(11, 14)]);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -134,7 +133,7 @@ public class Unit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
-        audioSource.PlayOneShot(audioClips[0]);
+        audioSource.PlayOneShot(gameManager.soundBank[0]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
     }
@@ -173,7 +172,7 @@ public class Unit : MonoBehaviour
             //Unit detection
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
-                //audioSource.PlayOneShot(audioClips[0]);
+                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(7, 11)]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }
