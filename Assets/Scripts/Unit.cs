@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     public PlayerController playerController;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -225,5 +226,11 @@ public class Unit : MonoBehaviour
         int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
+    }
+
+    //Highlights the enemy when clicked on
+    private void OnMouseDown()
+    {
+        animator.SetTrigger("Highlight");
     }
 }
