@@ -7,12 +7,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
     public UnitStats stats;
     public EnemyUnit currentTarget;
-    public float currentHP, distanceToTarget,nextAttackTime = 0;//, XP; Leveling System?
+    public float currentHP, distanceToTarget, nextAttackTime = 0;//, XP; Leveling System?
     public AudioSource audioSource;
     public BoxCollider2D hitBox;
     public PlayerController playerController;
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        animator = GetComponent<Animator>();
 
         //Building spawn
         if (stats.building)
@@ -67,6 +69,7 @@ public class Unit : MonoBehaviour
             //Check if the movement position is valid
             if (gameManager.mapLayers[1].HasTile(gridPos))
             {
+                if (audioSource.isPlaying) { audioSource.Stop(); }
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(1, 4)]);
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
@@ -75,6 +78,7 @@ public class Unit : MonoBehaviour
             //Gives the debug for where the invaild location is
             else
             {
+                if (audioSource.isPlaying) { audioSource.Stop(); }
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(4, 6)]);
                 Debug.Log(gameObject.name + " tried to move to an invalid position at " +playerController.mousePos);
             }
@@ -122,7 +126,8 @@ public class Unit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(11, 14)]);
+            if (audioSource.isPlaying) { audioSource.Stop(); }
+            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(11, 15)], transform.position);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -173,6 +178,7 @@ public class Unit : MonoBehaviour
             //Unit detection
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
+                if (audioSource.isPlaying) { audioSource.Stop(); }
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(7, 11)]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;

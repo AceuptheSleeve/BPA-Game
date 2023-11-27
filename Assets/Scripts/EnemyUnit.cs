@@ -11,21 +11,21 @@ public class EnemyUnit : MonoBehaviour
     public Unit currentTarget;
     public float currentHP, distanceToTarget, nextAttackTime = 0;//, XP; Leveling System?
     public AudioSource audioSource;
-    public TilemapCollider2D tilemapCollider;
     public BoxCollider2D hitBox;
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigning values
-        tilemapCollider = GetComponent<TilemapCollider2D>();
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        animator = GetComponent<Animator>();
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
@@ -78,7 +78,8 @@ public class EnemyUnit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(11, 14)]);
+            if (audioSource.isPlaying) { audioSource.Stop(); }
+            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(11, 15)], transform.position);
             hitBox.enabled = false;
             Debug.Log(gameObject.name + " is dead!");
             gameManager.names.Add(gameObject.name);
@@ -89,6 +90,7 @@ public class EnemyUnit : MonoBehaviour
     //Attacking enemies
     public void Attack()
     {
+        if (audioSource.isPlaying) { audioSource.Stop(); }
         audioSource.PlayOneShot(gameManager.soundBank[0]);
         currentTarget.TakeDamage(stats.damage);
         Debug.Log(gameObject.name + " dealt " + stats.damage + " damage to " + currentTarget.name + ". " + currentTarget.name + " now has " + currentTarget.currentHP + " left.");
