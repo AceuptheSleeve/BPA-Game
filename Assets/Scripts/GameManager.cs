@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] playerWorkers;
     public GameObject[] enemyUnits;
     public List<GameObject> spawnUnits = new List<GameObject>();
+    public List<GameObject> playerSpawnCatalog = new List<GameObject>();
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;

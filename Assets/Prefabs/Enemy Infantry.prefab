@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1323435621467921587}
   - component: {fileID: 3643876051738517830}
   - component: {fileID: 7074909209113070229}
+  - component: {fileID: 6026850045517970751}
   m_Layer: 0
   m_Name: Enemy Infantry
   m_TagString: Enemy
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 5
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.735849, g: 0.17007832, b: 0.17007832, a: 1}
   m_FlipX: 0
@@ -143,22 +144,11 @@ MonoBehaviour:
   currentHP: 0
   distanceToTarget: 0
   nextAttackTime: 0
-  audioClips:
-  - {fileID: 8300000, guid: a90663aacf9a82d43b9c8d7bced08b40, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
-  - {fileID: 8300000, guid: ceb1fb04b1253bb4395367ea1faf41d7, type: 3}
   audioSource: {fileID: 7074909209113070229}
-  tilemapCollider: {fileID: 0}
   hitBox: {fileID: 3643876051738517830}
   gameManager: {fileID: 0}
+  animator: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!61 &3643876051738517830
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -188,7 +178,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -202,7 +192,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.2, y: 1.1}
   m_EdgeRadius: 0
 --- !u!82 &7074909209113070229
 AudioSource:
@@ -300,3 +290,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &6026850045517970751
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958024289932295344}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

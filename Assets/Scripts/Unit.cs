@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
     public Animator animator;
+    public Rigidbody2D rb;
+    public bool isSelected = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class Unit : MonoBehaviour
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         //Building spawn
         if (stats.building)
@@ -61,8 +64,8 @@ public class Unit : MonoBehaviour
         Debug.DrawLine(transform.position, newPos);
         transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
-        //The unit will move to the mouse position on right click (left click right now for testing purposes) 
-        if (Input.GetMouseButtonDown(0))
+        //The unit will move to the mouse position on right click
+        if (Input.GetMouseButtonDown(1) && !stats.building && isSelected)
         {
             Vector3Int gridPos = gameManager.mapLayers[1].WorldToCell(playerController.mousePos);
 
@@ -73,6 +76,7 @@ public class Unit : MonoBehaviour
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(1, 4)]);
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
+                
             }
 
             //Gives the debug for where the invaild location is
@@ -82,6 +86,11 @@ public class Unit : MonoBehaviour
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(4, 6)]);
                 Debug.Log(gameObject.name + " tried to move to an invalid position at " +playerController.mousePos);
             }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            isSelected = false;
         }
 
         //Attacking when possible
@@ -238,5 +247,15 @@ public class Unit : MonoBehaviour
     private void OnMouseDown()
     {
         animator.SetTrigger("Highlight");
+        isSelected = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y);
+            newPos = transform.position;
+        }
     }
 }

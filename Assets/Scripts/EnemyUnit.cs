@@ -15,6 +15,7 @@ public class EnemyUnit : MonoBehaviour
     Vector2 newPos = new Vector2();
     public GameManager gameManager;
     public Animator animator;
+    public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class EnemyUnit : MonoBehaviour
         currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
@@ -140,5 +142,14 @@ public class EnemyUnit : MonoBehaviour
         int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y);
+            newPos = transform.position;
+        }
     }
 }
