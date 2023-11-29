@@ -64,8 +64,8 @@ public class Unit : MonoBehaviour
         Debug.DrawLine(transform.position, newPos);
         transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
-        //The unit will move to the mouse position on right click
-        if (Input.GetMouseButtonDown(1) && !stats.building && isSelected)
+        //The unit will move to the mouse position on left click since right click is messy
+        if (Input.GetMouseButtonDown(0) && !stats.building && isSelected)
         {
             Vector3Int gridPos = gameManager.mapLayers[1].WorldToCell(playerController.mousePos);
 
@@ -88,9 +88,12 @@ public class Unit : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        //Deselect the unit
+        if (Input.GetKeyDown(KeyCode.C) && isSelected)
         {
+            animator.SetTrigger("Highlight");
             isSelected = false;
+            Debug.Log(gameObject.name + " has been deselected");
         }
 
         //Attacking when possible
@@ -246,8 +249,12 @@ public class Unit : MonoBehaviour
     //Highlights the enemy when clicked on
     private void OnMouseDown()
     {
-        animator.SetTrigger("Highlight");
-        isSelected = true;
+        if (!isSelected && !stats.building)
+        {
+            animator.SetTrigger("Highlight");
+            Debug.Log(gameObject.name + " has been selected");
+            isSelected = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
