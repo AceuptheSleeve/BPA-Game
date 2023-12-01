@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
     public GameManager gameManager;
     public Animator animator;
     public Rigidbody2D rb;
-    public bool isSelected = false;
+    public bool isSelected = false, isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,30 +39,43 @@ public class Unit : MonoBehaviour
         //Building spawn
         if (stats.building)
         {
+            gameManager.playerUnits.Insert(0, gameObject);
             Debug.Log("The HQ was successfully spawned in at " + new Vector2(transform.position.x, transform.position.y)+ "!");
+            //The HQ will always be the first in the player units
         }
 
         //Worker spawn
         else if (stats.worker)
         {
-            Debug.Log(gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
+            gameManager.playerWorkers.Add(gameObject);
+            gameObject.name = "Worker " +gameManager.playerWorkers.Count;
+            Debug.Log(gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
 
         //Everything else that spawns
         else
         {
             GiveName();
-            Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.electricPool = gameManager.electricPool -= stats.electricUsage;
+            gameManager.playerUnits.Add(gameObject);
+            Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        Debug.DrawLine(transform.position, newPos);
-        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
+        if (isMoving)
+        {
+            Debug.DrawLine(transform.position, newPos);
+            transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
+        }
+
+        if (transform.position.x == newPos.x && transform.position.y == newPos.y)
+        {
+            isMoving = false;
+        }
 
         //The unit will move to the mouse position on left click since right click is messy
         if (Input.GetMouseButtonDown(0) && !stats.building && isSelected)
@@ -72,11 +85,16 @@ public class Unit : MonoBehaviour
             //Check if the movement position is valid
             if (gameManager.mapLayers[1].HasTile(gridPos))
             {
-                if (audioSource.isPlaying) { audioSource.Stop(); }
-                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(1, 4)]);
+                int index = UnityEngine.Random.Range(1, 7);
+                if (index < 4)
+                {
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(gameManager.soundBank[index]);
+                }
+
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
-                
+                isMoving = true;
             }
 
             //Gives the debug for where the invaild location is
@@ -91,9 +109,7 @@ public class Unit : MonoBehaviour
         //Deselect the unit
         if (Input.GetKeyDown(KeyCode.C) && isSelected)
         {
-            animator.SetTrigger("Highlight");
-            isSelected = false;
-            Debug.Log(gameObject.name + " has been deselected");
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), false);
         }
 
         //Attacking when possible
@@ -138,12 +154,15 @@ public class Unit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            if (audioSource.isPlaying) { audioSource.Stop(); }
-            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(11, 15)], transform.position);
             hitBox.enabled = false;
-            Debug.Log(gameObject.name + " is dead!");
+            if (stats.worker) { gameManager.playerWorkers.Remove(gameObject); }
+            else { gameManager.playerUnits.Remove(gameObject); }
             gameManager.names.Add(gameObject.name);
             gameManager.electricPool = gameManager.electricPool += stats.electricUsage;
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), false);
+            if (audioSource.isPlaying) { audioSource.Stop(); }
+            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(10, 13)], transform.position);
+            Debug.Log(gameObject.name + " is dead!");
             Destroy(gameObject);
         }
     }
@@ -191,7 +210,7 @@ public class Unit : MonoBehaviour
             if (indentifer && !stats.worker && indentifer.tag != "Resource")
             {
                 if (audioSource.isPlaying) { audioSource.Stop(); }
-                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(7, 11)]);
+                audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(6, 10)]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }
@@ -251,9 +270,7 @@ public class Unit : MonoBehaviour
     {
         if (!isSelected && !stats.building)
         {
-            animator.SetTrigger("Highlight");
-            Debug.Log(gameObject.name + " has been selected");
-            isSelected = true;
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
         }
     }
 

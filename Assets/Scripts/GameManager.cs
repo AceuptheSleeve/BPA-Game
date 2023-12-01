@@ -6,11 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] playerUnits;
-    public GameObject[] playerWorkers;
-    public GameObject[] enemyUnits;
-    public List<GameObject> spawnUnits = new List<GameObject>();
-    public List<GameObject> playerSpawnCatalog = new List<GameObject>();
+    public List<GameObject> playerUnits, playerWorkers, enemyUnits = new List<GameObject>();
+    public GameObject[] spawnCatalog;
+
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;
@@ -20,7 +18,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
         //Establishes the name list
         string[] lines = File.ReadAllLines(Path.Combine(Application.dataPath, "names.txt"));
         foreach (string line in lines)
@@ -40,38 +37,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Keeping tabs on all objects at once
-        playerUnits = GameObject.FindGameObjectsWithTag("Unit");
-        playerWorkers = GameObject.FindGameObjectsWithTag("Worker");
-        enemyUnits = GameObject.FindGameObjectsWithTag("Enemy");
 
         //Spawn tool
         switch (Input.inputString)
         {
-            //Player Infantry spawn (one for now)
+            //Player infantry spawn
             case "1":
-                Unit unit1 = spawnUnits[0].GetComponent<Unit>();
-                unit1.SpawnUnit(playerController.mousePos);
+                Instantiate(spawnCatalog[0], playerController.mousePos, new Quaternion());
                 break;
-            //Enemy spawning
+            //Enemy infantry spawning
             case "2":
-                EnemyUnit enemyUnit1 = spawnUnits[1].GetComponent<EnemyUnit>();
-                enemyUnit1.SpawnUnit(playerController.mousePos);
+                Instantiate(spawnCatalog[1], playerController.mousePos, new Quaternion());
                 break;
-            //Player worker spawn
+            //Worker spawn
             case "3":
-                Unit worker = spawnUnits[2].GetComponent<Unit>();
-                worker.SpawnUnit(playerController.mousePos);
+                Instantiate(spawnCatalog[2], playerController.mousePos, new Quaternion());
                 break;
             //Coal resource spawn
             case "4":
-                EnemyUnit coal = spawnUnits[3].GetComponent<EnemyUnit>();
-                coal.SpawnUnit(playerController.mousePos);
+                Instantiate(spawnCatalog[3], playerController.mousePos, new Quaternion());
                 break;
             //Iron resource spawn
             case "5":
-                EnemyUnit iron = spawnUnits[4].GetComponent<EnemyUnit>();
-                iron.SpawnUnit(playerController.mousePos);
+                Instantiate(spawnCatalog[4], playerController.mousePos, new Quaternion());
                 break;
         }
 
@@ -85,5 +73,17 @@ public class GameManager : MonoBehaviour
         {
             currentIron = ironCap;
         }
+
+        /*Fixing 'Object Disposed Exception'?
+        if (enemyUnits.Count == 0)
+        {
+            Instantiate();
+
+            if (enemyUnits.Count != 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        */
     }
 }

@@ -16,6 +16,7 @@ public class EnemyUnit : MonoBehaviour
     public GameManager gameManager;
     public Animator animator;
     public Rigidbody2D rb;
+    public bool isMoving;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class EnemyUnit : MonoBehaviour
         {
             GiveName();
             Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
+            gameManager.enemyUnits.Add(gameObject);
         }
     }
 
@@ -80,11 +82,12 @@ public class EnemyUnit : MonoBehaviour
         //Dying
         if (currentHP <= 0)
         {
-            if (audioSource.isPlaying) { audioSource.Stop(); }
-            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(11, 15)], transform.position);
             hitBox.enabled = false;
-            Debug.Log(gameObject.name + " is dead!");
+            gameManager.enemyUnits.Remove(gameObject);
             gameManager.names.Add(gameObject.name);
+            if (audioSource.isPlaying) { audioSource.Stop(); }
+            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(10, 13)], transform.position);
+            Debug.Log(gameObject.name + " is dead!");
             Destroy(gameObject);
         }
     }

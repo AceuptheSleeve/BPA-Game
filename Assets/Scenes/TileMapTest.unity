@@ -1752,6 +1752,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mousePos: {x: 0, y: 0}
+  selectedUnits: []
+  gameManager: {fileID: 0}
 --- !u!1001 &776380047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1946,16 +1948,12 @@ MonoBehaviour:
   playerUnits: []
   playerWorkers: []
   enemyUnits: []
-  spawnUnits:
+  spawnCatalog:
   - {fileID: 6449566303227092647, guid: 54494b0ce4a37ca498ba70dd445e18f0, type: 3}
   - {fileID: 8958024289932295344, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
   - {fileID: 6747486556705329604, guid: 6d5265d12cb46384abd58cedbe69c1b1, type: 3}
   - {fileID: 6834049272958498894, guid: 3ed89c00f86583840aae83825ad2281a, type: 3}
   - {fileID: 5772010254110715320, guid: 4c13e9306d3016e458ba3a2006ef33d7, type: 3}
-  playerSpawnCatalog:
-  - {fileID: 6747486556705329604, guid: 6d5265d12cb46384abd58cedbe69c1b1, type: 3}
-  - {fileID: 6449566303227092647, guid: 54494b0ce4a37ca498ba70dd445e18f0, type: 3}
-  - {fileID: 0}
   names: []
   currentCoal: 0
   currentIron: 0
@@ -1975,11 +1973,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9377c53fb2eceb54094c36ebecc9f48d, type: 3}
   - {fileID: 8300000, guid: 51f37f1b822322b46b1c780164c896cf, type: 3}
   - {fileID: 8300000, guid: e4c8e105b95383542b53f6592de2fc03, type: 3}
-  - {fileID: 8300000, guid: 4151202ad415f47449c8a9eed7befde6, type: 3}
+  - {fileID: 8300000, guid: 21c3faba5b66fc34fad6a304844e9228, type: 3}
   - {fileID: 8300000, guid: 30699b1bbdc2a794ca891e8efae8e5e8, type: 3}
   - {fileID: 8300000, guid: 7d011a9cf8cadcc4ca50ae9e36111171, type: 3}
   - {fileID: 8300000, guid: f9ad8e1133aa37649b86f5fb29dde11b, type: 3}
-  - {fileID: 8300000, guid: 438eaba65edc81d4ba110af300ac4f29, type: 3}
   - {fileID: 8300000, guid: 8ada5f8ae2335564899825a8ddade2ed, type: 3}
   - {fileID: 8300000, guid: b806e4b928600374bb4162b572516b1d, type: 3}
   - {fileID: 8300000, guid: 2940686e27c72844a8b0ef0b73aa8251, type: 3}
