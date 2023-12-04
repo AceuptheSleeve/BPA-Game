@@ -1,6 +1,8 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -72,7 +74,7 @@ public class Unit : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
         }
 
-        if (transform.position.x == newPos.x && transform.position.y == newPos.y)
+        else
         {
             isMoving = false;
         }
