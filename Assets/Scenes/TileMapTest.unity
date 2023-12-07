@@ -2065,63 +2065,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f2bb57f1ce0931408c0ff92037e046d, type: 3}
---- !u!1001 &867143144
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.070919
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.24021742
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1908193143500970348, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8958024289932295344, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
-      propertyPath: m_Name
-      value: Enemy Infantry
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d13a8c82b2b388942aa2d2a0aca3297a, type: 3}
 --- !u!1 &892717211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,7 +2526,6 @@ MonoBehaviour:
   - {fileID: 6747486556705329604, guid: 6d5265d12cb46384abd58cedbe69c1b1, type: 3}
   - {fileID: 6834049272958498894, guid: 3ed89c00f86583840aae83825ad2281a, type: 3}
   - {fileID: 5772010254110715320, guid: 4c13e9306d3016e458ba3a2006ef33d7, type: 3}
-  canvas: {fileID: 0}
   names: []
   currentCoal: 0
   currentIron: 0
@@ -7217,6 +7159,5 @@ SceneRoots:
   - {fileID: 1232662495}
   - {fileID: 562214354}
   - {fileID: 776380047}
-  - {fileID: 867143144}
   - {fileID: 703006795}
   - {fileID: 536312402}

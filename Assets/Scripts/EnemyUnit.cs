@@ -12,23 +12,22 @@ public class EnemyUnit : MonoBehaviour
     public float currentHP, distanceToTarget, nextAttackTime = 0;//, XP; Leveling System?
     public AudioSource audioSource;
     public BoxCollider2D hitBox;
-    Vector2 newPos = new Vector2();
+    Vector2 playerPos = new Vector2();
     public GameManager gameManager;
     public Animator animator;
     public Rigidbody2D rb;
-    public bool isMoving;
+    public bool enemyInRange;
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigning values
-        newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
-        currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        currentHP = stats.totalHP;
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
@@ -42,18 +41,24 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.enemyUnits.Add(gameObject);
         }
+
+        playerPos = gameManager.playerUnits[0].transform.position;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
+        if (!enemyInRange)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, playerPos, stats.speed * Time.deltaTime);
+        }
 
         //Attacking when possible
         if (currentTarget != null)
         {
             //Establishes a distance between the unit and its target
             distanceToTarget = Vector2.Distance(transform.position, currentTarget.transform.position);
+            enemyInRange = true;
 
             //Attack when in range
             if (Time.time >= nextAttackTime && distanceToTarget <= stats.attackRange)
@@ -76,6 +81,7 @@ public class EnemyUnit : MonoBehaviour
             EnemyDetection();
             nextAttackTime = 0;
             distanceToTarget = 0;
+            enemyInRange = false;
         }
 
 
@@ -90,6 +96,8 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log(gameObject.name + " is dead!");
             Destroy(gameObject);
         }
+
+
     }
 
     //Attacking enemies
@@ -145,14 +153,5 @@ public class EnemyUnit : MonoBehaviour
         int index = UnityEngine.Random.Range(0, gameManager.names.Count);
         gameObject.name = gameManager.names[index];
         gameManager.names.RemoveAt(index);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject)
-        {
-            transform.position = new Vector2(transform.position.x, transform.position.y);
-            newPos = transform.position;
-        }
     }
 }

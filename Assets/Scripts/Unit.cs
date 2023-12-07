@@ -24,9 +24,17 @@ public class Unit : MonoBehaviour
     public GameManager gameManager;
     public Animator animator;
     public Rigidbody2D rb;
-    public bool isSelected = false, isMoving = false;
+    public bool isSelected = false;
     public GameObject ui;
-    public Button infantryButton;
+    public Button spawnButton;
+
+
+
+    // Runs when created
+    void Awake()
+    {
+        ui = GameObject.Find("Canvas");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +44,10 @@ public class Unit : MonoBehaviour
         newPos = transform.position;
         hitBox = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
-        currentHP = stats.totalHP;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        currentHP = stats.totalHP;
         ui.SetActive(false);
 
         //Building spawn
@@ -69,25 +77,11 @@ public class Unit : MonoBehaviour
         }
     }
 
-    // Runs when created
-    private void Awake()
-    {
-        ui = GameObject.Find("Canvas");
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {
-        if (isMoving)
-        {
-            Debug.DrawLine(transform.position, newPos);
-            transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
-        }
-
-        else
-        {
-            isMoving = false;
-        }
+        Debug.DrawLine(transform.position, newPos);
+        transform.position = Vector2.MoveTowards(transform.position, newPos, stats.speed * Time.deltaTime);
 
         //The unit will move to the mouse position on left click since right click is messy
         if (Input.GetMouseButtonDown(0) && !stats.building && isSelected)
@@ -106,7 +100,6 @@ public class Unit : MonoBehaviour
 
                 newPos = playerController.mousePos;
                 Debug.Log("Moving " + gameObject.name + " to " + newPos);
-                isMoving = true;
             }
 
             //Gives the debug for where the invaild location is
@@ -290,12 +283,15 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnMouseDrag()
     {
-        if (other.gameObject)
+        if (!isSelected && !stats.building)
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y);
-            newPos = transform.position;
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
+        }
+        if (!isSelected && stats.building)
+        {
+            ui.SetActive(!ui.activeInHierarchy);
         }
     }
 }
