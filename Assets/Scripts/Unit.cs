@@ -10,6 +10,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using UnityEngine.XR;
 
 public class Unit : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class Unit : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public bool isSelected = false, isMoving = false;
+    public GameObject ui;
+    public Button infantryButton;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,7 @@ public class Unit : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        ui.SetActive(false);
 
         //Building spawn
         if (stats.building)
@@ -63,6 +67,12 @@ public class Unit : MonoBehaviour
             gameManager.playerUnits.Add(gameObject);
             Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
+    }
+
+    // Runs when created
+    private void Awake()
+    {
+        ui = GameObject.Find("Canvas");
     }
 
     // Update is called once per frame
@@ -273,6 +283,10 @@ public class Unit : MonoBehaviour
         if (!isSelected && !stats.building)
         {
             playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
+        }
+        if (!isSelected && stats.building)
+        {
+            ui.SetActive(!ui.activeInHierarchy);
         }
     }
 

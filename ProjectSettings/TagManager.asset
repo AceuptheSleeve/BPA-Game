@@ -9,6 +9,7 @@ TagManager:
   - Building
   - Worker
   - Resource
+  - UI
   layers:
   - Default
   - TransparentFX
