@@ -2052,6 +2052,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2827020449067758543, guid: 5f2bb57f1ce0931408c0ff92037e046d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5256074838825847623, guid: 5f2bb57f1ce0931408c0ff92037e046d, type: 3}
       propertyPath: m_Name
       value: HQ
@@ -2339,6 +2343,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  hq: {fileID: 0}
+  hqPos: {x: 0, y: 0}
+  xPos: 2
+  yPos: 1
   unitIndex: 0
 --- !u!1 &1722818490
 GameObject:
@@ -2393,6 +2401,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  hq: {fileID: 0}
+  hqPos: {x: 0, y: 0}
+  xPos: 2
+  yPos: 1
   unitIndex: 2
 --- !u!114 &1722818493
 MonoBehaviour:
