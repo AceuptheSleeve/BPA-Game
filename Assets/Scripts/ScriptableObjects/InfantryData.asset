@@ -15,11 +15,13 @@ MonoBehaviour:
   unitName: Line Infantry
   totalHP: 25
   electricUsage: 4
+  coalCost: 5
+  ironCost: 3
   damage: 5
   attackRate: 3
   attackRange: 5
   speed: 3
-  spawnTimer: 2.5
+  spawnTime: 0
   worker: 0
   building: 0
   iron: 0

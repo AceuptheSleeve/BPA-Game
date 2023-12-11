@@ -15,8 +15,8 @@ MonoBehaviour:
   unitName: Sniper
   totalHP: 10
   electricUsage: 7
-  coalCost: 0
-  ironCost: 0
+  coalCost: 11
+  ironCost: 5
   damage: 6
   attackRate: 1
   attackRange: 7

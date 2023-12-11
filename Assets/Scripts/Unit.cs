@@ -277,6 +277,7 @@ public class Unit : MonoBehaviour
         {
             playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
         }
+
         if (!isSelected && stats.building)
         {
             ui.SetActive(!ui.activeInHierarchy);
@@ -289,6 +290,7 @@ public class Unit : MonoBehaviour
         {
             playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
         }
+
         if (!isSelected && stats.building)
         {
             ui.SetActive(!ui.activeInHierarchy);

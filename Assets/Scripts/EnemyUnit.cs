@@ -127,7 +127,6 @@ public class EnemyUnit : MonoBehaviour
 
             if (indentifer)
             {
-                //audioSource.PlayOneShot(audioClips[0]);
                 Debug.Log(gameObject.name + " has detected " + indentifer.gameObject.name);
                 currentTarget = indentifer;
             }

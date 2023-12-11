@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
         coalCap = 100;
         ironCap = 100;
         electricPool = 100;
-        currentCoal = 0;
-        currentIron = 0;
+        currentCoal = 100;
+        currentIron = 100;
     }
 
     // Update is called once per frame

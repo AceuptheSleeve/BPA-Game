@@ -15,11 +15,13 @@ MonoBehaviour:
   unitName: Worker
   totalHP: 15
   electricUsage: 2
+  coalCost: 15
+  ironCost: 10
   damage: 2
   attackRate: 1.5
   attackRange: 5
   speed: 5
-  spawnTimer: 4.5
+  spawnTime: 0
   worker: 1
   building: 0
   iron: 0

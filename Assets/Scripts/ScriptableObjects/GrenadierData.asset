@@ -15,8 +15,8 @@ MonoBehaviour:
   unitName: Grenadier
   totalHP: 15
   electricUsage: 7
-  coalCost: 0
-  ironCost: 0
+  coalCost: 7
+  ironCost: 5
   damage: 8
   attackRate: 2
   attackRange: 4.5

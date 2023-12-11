@@ -15,8 +15,8 @@ MonoBehaviour:
   unitName: Officer
   totalHP: 15
   electricUsage: 10
-  coalCost: 0
-  ironCost: 0
+  coalCost: 9
+  ironCost: 5
   damage: 3
   attackRate: 3
   attackRange: 4
