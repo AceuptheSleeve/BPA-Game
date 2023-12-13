@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public bool isSelected = false;
-    public GameObject ui;
+    public GameObject buttonsUI;
     public Button spawnButton;
 
 
@@ -33,7 +33,7 @@ public class Unit : MonoBehaviour
     // Runs when created
     void Awake()
     {
-        ui = GameObject.Find("Canvas");
+        buttonsUI = GameObject.Find("Canvas/Buttons");
     }
 
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = stats.totalHP;
-        ui.SetActive(false);
+        buttonsUI.SetActive(false);
 
         //Building spawn
         if (stats.building)
@@ -280,20 +280,21 @@ public class Unit : MonoBehaviour
 
         if (!isSelected && stats.building)
         {
-            ui.SetActive(!ui.activeInHierarchy);
+            buttonsUI.SetActive(!buttonsUI.activeInHierarchy);
         }
     }
 
-    private void OnMouseDrag()
+    //Disabled beacuse it made UI finicky
+    /*private void onmousedrag()
     {
-        if (!isSelected && !stats.building)
+        if (!isselected && !stats.building)
         {
-            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
+            playercontroller.selectunit(gameobject.getcomponent<unit>(), true);
         }
 
-        if (!isSelected && stats.building)
+        if (!isselected && stats.building)
         {
-            ui.SetActive(!ui.activeInHierarchy);
+            buttonsui.setactive(!buttonsui.activeinhierarchy);
         }
-    }
+    }*/
 }
