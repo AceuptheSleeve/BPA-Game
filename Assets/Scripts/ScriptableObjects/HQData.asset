@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: HQ
   totalHP: 500
-  damage: 10
+  electricUsage: 0
+  coalCost: 0
+  ironCost: 0
+  damage: 3
   attackRate: 3
   attackRange: 10
   speed: 0
-  spawnTimer: 0
+  spawnTime: 0
   worker: 0
   building: 1
+  iron: 0
+  coal: 0

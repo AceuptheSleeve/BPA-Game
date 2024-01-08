@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public PlayerController playerController;
     public Tilemap[] mapLayers;
     public AudioClip[] soundBank;
+    private int currentWave;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,8 +31,8 @@ public class GameManager : MonoBehaviour
         coalCap = 100;
         ironCap = 100;
         electricPool = 100;
-        currentCoal = 100;
-        currentIron = 100;
+        currentCoal = 0;
+        currentIron = 0;
     }
 
     // Update is called once per frame
@@ -85,5 +86,24 @@ public class GameManager : MonoBehaviour
             }
         }
         */
+        
+        if (enemyUnits.Count == 1)
+        {
+            currentWave++;
+            Debug.Log("60 seconds until wave " + currentWave+ " starts...");
+            if (Time.time > 60f) { SpawnWave(currentWave); }
+        }
+    }
+
+    void SpawnWave(int wave)
+    {
+        int enemiesToSpawn = 5 * wave;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Instantiate(spawnCatalog[1], playerUnits[0].transform.position * Random.Range(9, 15), new Quaternion());
+        }
+
+        Debug.Log(enemiesToSpawn+ "enemies have been spawned in");
     }
 }
