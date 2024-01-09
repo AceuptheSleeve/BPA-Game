@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public Tilemap[] mapLayers;
     public AudioClip[] soundBank;
     private int currentWave;
+    public List<Vector2> spawnPoints = new List<Vector2>();
+    public bool gameOn = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -74,34 +76,25 @@ public class GameManager : MonoBehaviour
         {
             currentIron = ironCap;
         }
-
-        /*Fixing 'Object Disposed Exception'?
-        if (enemyUnits.Count == 0)
-        {
-            Instantiate();
-
-            if (enemyUnits.Count != 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-        */
         
-        if (enemyUnits.Count == 1)
+        if (Input.GetKeyDown(KeyCode.P))
         {
             currentWave++;
             Debug.Log("60 seconds until wave " + currentWave+ " starts...");
-            if (Time.time > 60f) { SpawnWave(currentWave); }
+            SpawnWave(currentWave);
         }
     }
 
     void SpawnWave(int wave)
     {
         int enemiesToSpawn = 5 * wave;
+        int chosenPoint;
+
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Instantiate(spawnCatalog[1], playerUnits[0].transform.position * Random.Range(9, 15), new Quaternion());
+            chosenPoint = Random.Range(0, spawnPoints.Count);
+            Instantiate(spawnCatalog[1], new Vector2(spawnPoints[chosenPoint].x + Random.Range(-5, 40), spawnPoints[chosenPoint].y + Random.Range(-5, 40)), new Quaternion());
         }
 
         Debug.Log(enemiesToSpawn+ "enemies have been spawned in");

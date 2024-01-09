@@ -48,7 +48,7 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = stats.totalHP;
-        buttonsUI.SetActive(false);
+
 
         //Building spawn
         if (stats.building)
@@ -75,6 +75,8 @@ public class Unit : MonoBehaviour
             gameManager.playerUnits.Add(gameObject);
             Debug.Log(stats.unitName + ", " +gameObject.name+ " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
+
+        buttonsUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -160,15 +162,26 @@ public class Unit : MonoBehaviour
         if (currentHP <= 0)
         {
             hitBox.enabled = false;
-            if (stats.worker) { gameManager.playerWorkers.Remove(gameObject); }
-            else { gameManager.playerUnits.Remove(gameObject); }
-            gameManager.names.Add(gameObject.name);
-            gameManager.electricPool = gameManager.electricPool += stats.electricUsage;
-            playerController.SelectUnit(gameObject.GetComponent<Unit>(), false);
-            if (audioSource.isPlaying) { audioSource.Stop(); }
-            AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(10, 13)], transform.position);
-            Debug.Log(gameObject.name + " is dead!");
-            Destroy(gameObject);
+
+            if (stats.building)
+            {
+                Time.timeScale = 0;
+                Debug.Log("The player base has been destroyed! Game Over!");
+                buttonsUI.SetActive(buttonsUI.activeInHierarchy);
+            }
+
+            else
+            {
+                if (stats.worker) { gameManager.playerWorkers.Remove(gameObject); }
+                else { gameManager.playerUnits.Remove(gameObject); }
+                gameManager.names.Add(gameObject.name);
+                gameManager.electricPool = gameManager.electricPool += stats.electricUsage;
+                playerController.SelectUnit(gameObject.GetComponent<Unit>(), false);
+                if (audioSource.isPlaying) { audioSource.Stop(); }
+                AudioSource.PlayClipAtPoint(gameManager.soundBank[UnityEngine.Random.Range(10, 13)], transform.position);
+                Debug.Log(gameObject.name + " is dead!");
+                Destroy(gameObject);
+            }
         }
     }
 

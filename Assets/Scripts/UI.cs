@@ -6,10 +6,7 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     public GameManager gameManager;
-    public Text baseHPText;
-    public Text energyText;
-    public Text ironText;
-    public Text coalText;
+    public Text baseHPText, energyText, ironText, coalText;
     public float hitPoints;
 
     // Start is called before the first frame update

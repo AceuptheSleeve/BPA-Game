@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,17 +12,15 @@ public class PlayerController : MonoBehaviour
     public GameManager gameManager;
     public Vector3 currentPos;
     private Vector3 screenSpace;
-    public float topBarrier, bottomBarrier, leftBarrier, rightBarrier;
+    public float leftBarrier, rightBarrier;
 
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        topBarrier = 40;
-        bottomBarrier = -40;
         leftBarrier = 30;
-        rightBarrier = 15;
+        rightBarrier = 30;
 
         transform.position = new Vector3(0, 0, -10);
         Camera.main.orthographicSize = 5f;
@@ -41,17 +40,6 @@ public class PlayerController : MonoBehaviour
 
         //Zoom the screen in and out using the srollwheel
         Camera.main.orthographicSize -= scrollInput * 8f * 100f * Time.deltaTime;
-        //Camera zoom limits
-        switch (Camera.main.orthographicSize)
-        {
-            case < 2.5f:
-                Camera.main.orthographicSize = 2.5f;
-                break;
-
-            case > 8f:
-                Camera.main.orthographicSize = 8f;
-                break;
-        }
 
         //Camera movement
         if (horizontalInput != 0)
@@ -64,34 +52,46 @@ public class PlayerController : MonoBehaviour
             transform.Translate(Vector3.up * verticalInput * Time.deltaTime * 8);
         }
 
-        //Top barrier
-        if (transform.position.x >= topBarrier)
+        //Top and bottom barrier
+        switch (transform.position.y)
         {
-            transform.position = new Vector3(40, transform.position.y, transform.position.z);
+            case >= 20:
+                transform.position = new Vector3(transform.position.x, 20, transform.position.z);
+                break;
+
+            case <= -30:
+                transform.position = new Vector3(transform.position.x, -30, transform.position.z);
+                break;
         }
 
-        //Bottom barrier
-        if (transform.position.x <= -bottomBarrier)
+
+        //Right and left barriers
+        switch (transform.position.x)
         {
-            transform.position = new Vector3(-40, transform.position.y, transform.position.z);
+            case >= 45:
+                transform.position = new Vector3(45, transform.position.y, transform.position.z);
+                break;
+
+            case <= -45:
+                transform.position = new Vector3(-45, transform.position.y, transform.position.z);
+                break;
         }
 
-        //Right barrier
-        if (transform.position.y >= rightBarrier)
+        //Camera zoom limits
+        switch (Camera.main.orthographicSize)
         {
-            transform.position = new Vector3(transform.position.x, 15, transform.position.z);
-        }
+            case < 2.5f:
+                Camera.main.orthographicSize = 2.5f;
+                break;
 
-        //Left barrier
-        if (transform.position.y <= leftBarrier)
-        {
-            transform.position = new Vector3(transform.position.x, -30, transform.position.z);
+            case > 9:
+                Camera.main.orthographicSize = 9;
+                break;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.position = new Vector3(0, 0, -10);
-            Camera.main.orthographicSize = 5f;
         }
     }
 

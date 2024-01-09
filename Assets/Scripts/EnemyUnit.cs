@@ -28,6 +28,7 @@ public class EnemyUnit : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = stats.totalHP;
+        playerPos = gameManager.playerUnits[0].transform.position;
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
@@ -41,8 +42,6 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
             gameManager.enemyUnits.Add(gameObject);
         }
-
-        playerPos = gameManager.playerUnits[0].transform.position;
     }
 
     // Update is called once per frame
@@ -84,7 +83,6 @@ public class EnemyUnit : MonoBehaviour
             enemyInRange = false;
         }
 
-
         //Dying
         if (currentHP <= 0)
         {
@@ -96,8 +94,6 @@ public class EnemyUnit : MonoBehaviour
             Debug.Log(gameObject.name + " is dead!");
             Destroy(gameObject);
         }
-
-
     }
 
     //Attacking enemies
