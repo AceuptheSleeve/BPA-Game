@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> playerUnits, playerWorkers, enemyUnits = new List<GameObject>();
+    public List<GameObject> playerUnits, playerWorkers, enemyUnits, coalList, ironList = new List<GameObject>();
+    public UnitStats[] stats;
     public GameObject[] spawnCatalog;
-
     public List<string> names = new List<string>();
     public float currentCoal, currentIron, coalCap, ironCap, electricPool;
     public PlayerController playerController;
@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     public AudioClip[] soundBank;
     private int currentWave;
     public List<Vector2> spawnPoints = new List<Vector2>();
-    public bool gameOn = false;
 
     // Start is called before the first frame update
     void Awake()

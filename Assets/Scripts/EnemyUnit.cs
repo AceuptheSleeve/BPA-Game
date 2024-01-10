@@ -12,7 +12,7 @@ public class EnemyUnit : MonoBehaviour
     public float currentHP, distanceToTarget, nextAttackTime = 0;//, XP; Leveling System?
     public AudioSource audioSource;
     public BoxCollider2D hitBox;
-    Vector2 playerPos = new Vector2();
+    public Vector2 playerPos = new Vector2();
     public GameManager gameManager;
     public Animator animator;
     public Rigidbody2D rb;
@@ -28,11 +28,22 @@ public class EnemyUnit : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = stats.totalHP;
-        playerPos = gameManager.playerUnits[0].transform.position;
+        
 
         //Resources don't get custom names
         if (stats.iron || stats.coal)
         {
+            if (stats.iron)
+            {
+                gameManager.ironList.Add(gameObject);
+                gameObject.name = "Iron " +gameManager.ironList.Count;
+            }
+
+            else if (stats.coal)
+            {
+                gameManager.coalList.Add(gameObject);
+                gameObject.name = "Coal " + gameManager.coalList.Count;
+            }
             Debug.Log(gameObject.name + " has spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
         }
 
@@ -40,6 +51,7 @@ public class EnemyUnit : MonoBehaviour
         {
             GiveName();
             Debug.Log(stats.unitName + ", " + gameObject.name + " has been spawned in at " + new Vector2(transform.position.x, transform.position.y) + "!");
+            playerPos = gameManager.playerUnits[0].transform.position;
             gameManager.enemyUnits.Add(gameObject);
         }
     }
