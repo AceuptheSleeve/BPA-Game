@@ -151,6 +151,8 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   animator: {fileID: 0}
   rb: {fileID: 0}
+  isSelected: 0
+  buttonsUI: {fileID: 0}
 --- !u!95 &1236960493630348812
 Animator:
   serializedVersion: 5

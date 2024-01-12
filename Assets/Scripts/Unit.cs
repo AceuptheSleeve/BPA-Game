@@ -77,6 +77,9 @@ public class Unit : MonoBehaviour
         }
 
         buttonsUI.SetActive(false);
+
+        //Adds the unit to a list
+        UnitSelections.Instance.unitList.Add(this.gameObject);
     }
 
     // Update is called once per frame
@@ -111,6 +114,12 @@ public class Unit : MonoBehaviour
                 audioSource.PlayOneShot(gameManager.soundBank[UnityEngine.Random.Range(4, 6)]);
                 Debug.Log(gameObject.name + " tried to move to an invalid position at " +playerController.mousePos);
             }
+        }
+
+        //Select all units
+        if (Input.GetKeyDown(KeyCode.E) && !isSelected && !stats.building)
+        {
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
         }
 
         //Deselect the unit
@@ -283,18 +292,23 @@ public class Unit : MonoBehaviour
         gameManager.names.RemoveAt(index);
     }
 
-    //Highlights the enemy when clicked on
+    //Buttons show when clicking on HQ
     private void OnMouseDown()
     {
-        if (!isSelected && !stats.building)
-        {
-            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
-        }
-
         if (!isSelected && stats.building)
         {
             buttonsUI.SetActive(!buttonsUI.activeInHierarchy);
         }
+
+        /*//Highlight
+        if (UnitSelections.Instance.unitsSelected.Contains(this.gameObject))
+        {
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), true);
+        }
+        else
+        {
+            playerController.SelectUnit(gameObject.GetComponent<Unit>(), false);
+        }*/
     }
 
     //Disabled beacuse it made UI finicky
@@ -310,4 +324,10 @@ public class Unit : MonoBehaviour
             buttonsui.setactive(!buttonsui.activeinhierarchy);
         }
     }*/
+
+    //Runs when unit is detroyed
+    private void OnDestroy()
+    {
+        UnitSelections.Instance.unitList.Remove(this.gameObject);
+    }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2704432033844983719}
   - component: {fileID: 2745213399001608533}
   - component: {fileID: -4824451139483876286}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Iron
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -147,9 +147,11 @@ MonoBehaviour:
   nextAttackTime: 0
   audioSource: {fileID: 2704432033844983719}
   hitBox: {fileID: 8880405154520766459}
+  playerPos: {x: 0, y: 0}
   gameManager: {fileID: 0}
   animator: {fileID: 0}
   rb: {fileID: 0}
+  enemyInRange: 0
 --- !u!61 &8880405154520766459
 BoxCollider2D:
   m_ObjectHideFlags: 0

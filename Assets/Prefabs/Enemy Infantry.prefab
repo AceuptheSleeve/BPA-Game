@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7074909209113070229}
   - component: {fileID: 6026850045517970751}
   - component: {fileID: 3829693144520913616}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Infantry
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -147,6 +147,7 @@ MonoBehaviour:
   nextAttackTime: 0
   audioSource: {fileID: 7074909209113070229}
   hitBox: {fileID: 3643876051738517830}
+  playerPos: {x: 0, y: 0}
   gameManager: {fileID: 0}
   animator: {fileID: 0}
   rb: {fileID: 0}

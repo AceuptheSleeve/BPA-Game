@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8738947842925807163}
   - component: {fileID: -4261946782828968211}
   - component: {fileID: 6767550453683511723}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coal
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -147,9 +147,11 @@ MonoBehaviour:
   nextAttackTime: 0
   audioSource: {fileID: 8738947842925807163}
   hitBox: {fileID: 3636234525944710622}
+  playerPos: {x: 0, y: 0}
   gameManager: {fileID: 0}
   animator: {fileID: 0}
   rb: {fileID: 0}
+  enemyInRange: 0
 --- !u!61 &3636234525944710622
 BoxCollider2D:
   m_ObjectHideFlags: 0

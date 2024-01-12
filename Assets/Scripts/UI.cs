@@ -9,13 +9,6 @@ public class UI : MonoBehaviour
     public Text baseHPText, energyText, ironText, coalText;
     public float hitPoints;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         baseHPText.text = "Base HP: " + GameObject.Find("HQ").GetComponent<Unit>().currentHP + "/500";
