@@ -25,7 +25,7 @@ public class ButtonScript : MonoBehaviour
         coalCost = gameManager.spawnCatalog[unitIndex].GetComponent<Unit>().stats.coalCost;
     }
 
-    public void OnButtonPress()
+    public void OnButtonPress() // Does stuff when the button is pressed
     {
         //Checking to see if the player has enough resources to spawn a unit
         if (gameManager.currentCoal >= coalCost && gameManager.currentIron >= ironCost)
@@ -44,7 +44,7 @@ public class ButtonScript : MonoBehaviour
         
     }
 
-    void SpawnUnit(int index)
+    void SpawnUnit(int index) // Spawn the unit in a random position in an area around the HQ
     {
         Vector2 randomPos = hqPos + new Vector2(Random.Range(xPos, -xPos), Random.Range(yPos, -yPos));
         Instantiate(gameManager.spawnCatalog[index], randomPos, new Quaternion());

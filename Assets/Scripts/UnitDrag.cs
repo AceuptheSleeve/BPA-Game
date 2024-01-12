@@ -22,20 +22,20 @@ public class UnitDrag : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // When left click pressed set startPos and makes a new rect
         {
             startPos = Input.mousePosition;
             selectionBox = new Rect();
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) // When left click is held down set endPos and draws the selection box
         {
             endPos = Input.mousePosition;
             DrawVisual();
             DrawSelction();
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) // When left click is releaced selects all units in the rect then resets the box and vars
         {
             SelectUnits();
             startPos = Vector2.zero;
@@ -44,7 +44,7 @@ public class UnitDrag : MonoBehaviour
         }
     }
 
-    void DrawVisual()
+    void DrawVisual() // Edits a rectangle for the visuals of the select box
     {
         Vector2 boxStart = startPos;
         Vector2 boxEnd = endPos;
@@ -57,7 +57,7 @@ public class UnitDrag : MonoBehaviour
         boxVisual.sizeDelta = boxSize;
     }
 
-    void DrawSelction()
+    void DrawSelction() // Makes a box
     {
         if (Input.mousePosition.x < startPos.x)
         {
@@ -82,7 +82,7 @@ public class UnitDrag : MonoBehaviour
         }
     }
 
-    void SelectUnits()
+    void SelectUnits() // All units in the box will be selected
     {
         foreach (var unit in UnitSelections.Instance.unitList)
         {

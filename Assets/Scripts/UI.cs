@@ -9,7 +9,7 @@ public class UI : MonoBehaviour
     public Text baseHPText, energyText, ironText, coalText;
     public float hitPoints;
 
-    void Update()
+    void Update() // Sets all the stats in the UI
     {
         baseHPText.text = "Base HP: " + GameObject.Find("HQ").GetComponent<Unit>().currentHP + "/500";
         energyText.text = "Energy: " + GameObject.Find("Game Manager").GetComponent<GameManager>().electricPool + "/100";

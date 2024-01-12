@@ -24,7 +24,7 @@ public class UnitSelections : MonoBehaviour
         }
     }
 
-    public void ClickSelect(GameObject unitToAdd)
+    public void ClickSelect(GameObject unitToAdd) // Clicking on a unit sets it to be the only selected unit
     {
         DeselectAll();
         unitsSelected.Add(unitToAdd);
@@ -33,7 +33,7 @@ public class UnitSelections : MonoBehaviour
         unitNameList.UpdateList();
     }
 
-    public void ShiftClickSelect(GameObject unitToAdd)
+    public void ShiftClickSelect(GameObject unitToAdd) // Shift clicking adds/removes the unit
     {
         if (!unitsSelected.Contains(unitToAdd))
         {
@@ -51,7 +51,7 @@ public class UnitSelections : MonoBehaviour
         }
     }
 
-    public void DragSelect(GameObject unitToAdd)
+    public void DragSelect(GameObject unitToAdd) // Drag a rectangle and all that's in it is selected
     {
         if (!unitsSelected.Contains(unitToAdd))
         {
@@ -61,7 +61,7 @@ public class UnitSelections : MonoBehaviour
         }
     }
 
-    public void DeselectAll()
+    public void DeselectAll() // Removes all units from the list
     {
         unitsSelected.Clear();
 

@@ -15,13 +15,13 @@ public class UnitClick : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // If left click
         {
-            RaycastHit2D hit = Physics2D.Raycast(myCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(myCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero); // Makes a ray at the location of the mouse
 
-            if (hit)
+            if (hit) // If ray hits something
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift)) // If left shift
                 {
                     UnitSelections.Instance.ShiftClickSelect(hit.collider.gameObject);
                 }
@@ -31,9 +31,9 @@ public class UnitClick : MonoBehaviour
                     Debug.Log(hit.collider.gameObject.name);
                 }
             }
-            else
+            else // If the ray doesn't hit anything
             {
-                if (!Input.GetKey(KeyCode.LeftShift))
+                if (!Input.GetKey(KeyCode.LeftShift)) // If not left shift
                 {
                     UnitSelections.Instance.DeselectAll();
                 }
