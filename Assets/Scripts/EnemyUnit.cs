@@ -123,7 +123,7 @@ public class EnemyUnit : MonoBehaviour
         currentHP -= amount;
     }
 
-    //Since the 'enemy' don't need to gather resources, they can only detect player units
+    //Since the 'enemy' doesn't need to gather resources, they can only detect player units
     public void EnemyDetection()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);

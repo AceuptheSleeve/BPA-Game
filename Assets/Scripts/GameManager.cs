@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public UnitStats[] stats;
     public GameObject[] spawnCatalog;
     public List<string> names = new List<string>();
-    public float currentCoal, currentIron, coalCap, ironCap, electricPool;
+    public float currentCoal, currentIron, coalCap, ironCap, electricPool, nextWaveTime = 0;
     public PlayerController playerController;
     public Tilemap[] mapLayers;
     public AudioClip[] soundBank;
@@ -65,6 +65,84 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+        switch (currentCoal)
+        {
+            case 10:
+                Debug.Log("The coal total is now 10!");
+                break;
+
+            case 20:
+                Debug.Log("The coal total is now 20!");
+                break;
+
+            case 30:
+                Debug.Log("The coal total is now 30!");
+                break;
+
+            case 40:
+                Debug.Log("The coal total is now 40!");
+                break;
+
+            case 50:
+                Debug.Log("The coal total is now 50!");
+                break;
+
+            case 60:
+                Debug.Log("The coal total is now 60!");
+                break;
+
+            case 70:
+                Debug.Log("The coal total is now 70!");
+                break;
+
+            case 80:
+                Debug.Log("The coal total is now 80!");
+                break;
+
+            case 90:
+                Debug.Log("The coal total is now 90!");
+                break;
+        }
+
+        switch (currentIron)
+        {
+            case 10:
+                Debug.Log("The iron total is now 10!");
+                break;
+
+            case 20:
+                Debug.Log("The iron total is now 20!");
+                break;
+
+            case 30:
+                Debug.Log("The iron total is now 30!");
+                break;
+
+            case 40:
+                Debug.Log("The iron total is now 40!");
+                break;
+
+            case 50:
+                Debug.Log("The iron total is now 50!");
+                break;
+
+            case 60:
+                Debug.Log("The iron total is now 60!");
+                break;
+
+            case 70:
+                Debug.Log("The iron total is now 70!");
+                break;
+
+            case 80:
+                Debug.Log("The iron total is now 80!");
+                break;
+
+            case 90:
+                Debug.Log("The iron total is now 90!");
+                break;
+        }
+
         //Enforcing resource caps
         if (currentCoal >= coalCap)
         {
@@ -75,27 +153,25 @@ public class GameManager : MonoBehaviour
         {
             currentIron = ironCap;
         }
-        
-        if (Input.GetKeyDown(KeyCode.P))
+
+        if (Time.time >= nextWaveTime)
         {
-            currentWave++;
-            Debug.Log("60 seconds until wave " + currentWave+ " starts...");
             SpawnWave(currentWave);
+            nextWaveTime = Time.time + 45;
+            currentWave++;
         }
     }
-
     void SpawnWave(int wave)
     {
+        Debug.Log("Wave " + currentWave + " has started!");
         int enemiesToSpawn = 5 * wave;
-        int chosenPoint;
-
-
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            chosenPoint = Random.Range(0, spawnPoints.Count);
+            int chosenPoint = Random.Range(0, spawnPoints.Count);
             Instantiate(spawnCatalog[1], new Vector2(spawnPoints[chosenPoint].x + Random.Range(-5, 40), spawnPoints[chosenPoint].y + Random.Range(-5, 40)), new Quaternion());
         }
-
-        Debug.Log(enemiesToSpawn+ "enemies have been spawned in");
+        Debug.Log(enemiesToSpawn + " enemies have been spawned in!");
     }
 }
+
+

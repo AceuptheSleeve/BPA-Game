@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
+using static UnityEngine.UI.Image;
 
 public class Unit : MonoBehaviour
 {
@@ -208,13 +209,11 @@ public class Unit : MonoBehaviour
         if (currentTarget.stats.coal)
         {
             gameManager.currentCoal = gameManager.currentCoal += stats.damage;
-            Debug.Log(gameObject.name + " added " + stats.damage + " to the coal total. The total is now " + gameManager.currentCoal);
         }
 
         else if (currentTarget.stats.iron)
         {
-            gameManager.currentIron = gameManager.currentIron += stats.damage / 2f;
-            Debug.Log(gameObject.name + " added " + stats.damage + " to the coal total. The total is now " + gameManager.currentIron);
+            gameManager.currentIron = gameManager.currentIron += stats.damage;
         }
     }
 
@@ -224,6 +223,8 @@ public class Unit : MonoBehaviour
         currentHP -= amount;
     }
 
+
+    //Detecting enemies within range
     public void EnemyDetection()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, new Vector2(stats.attackRange, stats.attackRange), 0);
